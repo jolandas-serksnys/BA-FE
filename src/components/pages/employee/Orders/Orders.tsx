@@ -64,9 +64,13 @@ export const OrdersPage = () => {
                               <strong className="d-block">{item.table_claim.table.displayName}</strong>
                               <small>{item.table_claim.customers.length} Customer{item.table_claim.customers.length > 1 ? 's' : ''}</small>
                             </div>
+                            {
+                              /*
                             <strong className="text-warning">
                               <IconAlert />
                             </strong>
+                              */
+                            }
                           </div>
                         </Nav.Link>
                       </Nav.Item>
@@ -77,6 +81,8 @@ export const OrdersPage = () => {
                   <Tab.Content>
                     {filteredOrders && filteredOrders.map((item, index) => (
                       <Tab.Pane key={item.id} eventKey={index}>
+                        {
+                          /*
                         <Alert variant="warning" className="p-4 py-3">
                           <Alert.Heading>
                             <strong>Assistance request</strong>
@@ -85,6 +91,8 @@ export const OrdersPage = () => {
                             Table &quot;<strong>{item.table_claim.table.displayName}</strong>&quot; has requested assistance from an employee.
                           </div>
                         </Alert>
+                          */
+                        }
                         <Accordion defaultActiveKey="0">
                           {item.customer_orders.map((order, index) => <CustomerOrder key={index} index={index} order={order} />)}
                         </Accordion>

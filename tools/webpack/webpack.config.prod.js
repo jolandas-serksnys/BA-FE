@@ -1,4 +1,6 @@
-module.exports = {
+var plugins = require('./webpack.plugins');
+
+module.exports = (env) => ({
   mode: 'production',
   entry: ['./src/main.tsx'],
   module: {
@@ -9,7 +11,7 @@ module.exports = {
     chunkFilename: '[name].[chunkhash].chunk.js',
     clean: true,
   },
-  plugins: [...require('./webpack.plugins')],
+  plugins: plugins(env),
   resolve: {
     extensions: ['.js', '.ts', '.jsx', '.tsx', '.css'],
     alias: {
@@ -36,4 +38,4 @@ module.exports = {
       },
     },
   },
-};
+});

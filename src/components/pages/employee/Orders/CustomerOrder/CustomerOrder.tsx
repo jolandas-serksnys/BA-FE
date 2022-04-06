@@ -32,13 +32,26 @@ export const CustomerOrder = ({ order: data, index }: Props) => {
     setIsLoading(false);
   };
 
+  let statusLabelClass = "bg-primary";
+
+  switch (order.status) {
+    case CustomerOrderStatus.CREATED:
+      statusLabelClass = "bg-success";
+      break;
+    case CustomerOrderStatus.CANCELLED:
+      statusLabelClass = "bg-danger";
+      break;
+    default:
+      statusLabelClass = "bg-primary";
+  }
+
   return (
     <Accordion.Item eventKey={`${index}`} key={index}>
       <Accordion.Header>
         <div className="d-flex justify-content-between w-100 pe-3">
           <div className="d-flex gap-3 align-items-center">
             {order.status &&
-              <div className={clsx('badge', [order.status === CustomerOrderStatus.CANCELLED ? 'bg-danger' : 'bg-primary'])}>{capitalize(order.status)}</div>
+              <div className={clsx('badge', statusLabelClass)}>{capitalize(order.status)}</div>
             }
             {order.title}
           </div>

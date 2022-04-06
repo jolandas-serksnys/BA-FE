@@ -34,7 +34,7 @@ export const SocketProvider = ({ children }: Props) => {
   }, [user, tableClaim]);
 
   const initSocket = async () => {
-    const newSocket = await io('http://localhost:8080', {
+    const newSocket = await io(process.env.API_BASE_URL, {
       auth: { accessToken: user.accessToken },
       query: {
         tableClaim: tableClaim?.id,

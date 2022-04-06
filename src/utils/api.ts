@@ -4,7 +4,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 
 const api = axios.create({
-  baseURL: 'http://localhost:8080/api'
+  baseURL: `${process.env.API_BASE_URL}/api`,
 });
 api.defaults.headers.common.Authorization = `Bearer token`;
 
@@ -15,7 +15,7 @@ api.interceptors.request.use(
     config.headers = {
       'Authorization': `Bearer ${token}`,
       'Accept': 'application/json',
-      'allowOrigin': 'http://localhost:8080',
+      'allowOrigin': process.env.API_BASE_URL,
     }
     return config;
   },
