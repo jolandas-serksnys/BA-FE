@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+    "lib": [
+      "es2015", 
+      "es5", 
+      "dom", 
+      "dom.iterable", 
+      "es7", 
+      "es2017", 
+      "es2018", 
+      "es2019", 
+      "esnext"
+    ],
+    "jsx": "react",
+    "allowJs": true,
+    "target": "ES6",
+    "module": "ESNext",
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "noImplicitAny": true,
+    "sourceMap": true,
+    "baseUrl": ".",
+    "outDir": "dist",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "paths": {
+      "*": ["node_modules/*"],
+      "@assets/*": ["./assets/*"],
+      "@src/*": ["./src/*"]
+    }
+  },
+  "include": ["src/**/*", "tools/**/*"]
+}

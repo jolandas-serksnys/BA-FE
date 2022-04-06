@@ -1,0 +1,12 @@
+html,
+body,
+#root {
+  min-height : 100vh;
+  font-family: 'Open Sans';
+  font-size  : 12pt;
+}
+
+.section-heading {
+  font-family: 'overpass';
+  font-weight: 800;
+}
