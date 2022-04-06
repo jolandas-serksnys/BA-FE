@@ -29,7 +29,7 @@ module.exports = (env) => ({
     open: true,
     stats: 'errors-warnings',
     hot: true,
-    port: 3000,
+    port: process.env.PORT || 3000,
     historyApiFallback: true
   },
   optimization: {
