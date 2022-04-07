@@ -3,8 +3,7 @@ import { Customer } from "./customer";
 import { Table } from "./table";
 
 export const URL = {
-  AVAILABILIY: "/table/:id/check",
-  CLAIMED: "/table/claimed",
+  CLAIMED: "/claimed",
 }
 
 export interface TableClaim extends Base {

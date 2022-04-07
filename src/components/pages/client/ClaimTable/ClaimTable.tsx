@@ -1,15 +1,15 @@
 import { Card, CardTitle, CodeInput, Button, Input } from "@src/components/common";
 import { Layout } from "@src/components/common/Layout/Layout";
 import { QRCodeScan } from "@src/components/common/QRScan/QRCodeScan";
-import { useCheckAvailability } from "@src/hooks/tableClaim";
+import { useCheckTable } from "@src/hooks/table";
 import { useSignInCustomer } from "@src/hooks/user";
 import { Table } from "@src/models/table";
 import { Form, Formik } from "formik";
-import React, { FormEvent, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 export const ClaimTablePage = () => {
   const { mutate: mutateCustomer, isLoading: isLoadingCustomer } = useSignInCustomer();
-  const { mutate: mutateAvailability, isLoading: isLoadingAvailability, isError: isErrorAvailability, data: tableAvailabilityData, error: errorAvailability } = useCheckAvailability();
+  const { mutate: mutateAvailability, isLoading: isLoadingAvailability, isError: isErrorAvailability, data: tableAvailabilityData, error: errorAvailability } = useCheckTable();
 
   const [claimMethod, setClaimMethod] = useState("input");
   const [code, setCode] = useState<string | null>(null);

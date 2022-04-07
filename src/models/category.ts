@@ -2,11 +2,11 @@ import { Base } from "./base";
 import { Dish } from "./dish";
 
 export const URL = {
-  LIST: "/category",
-  CREATE: "/category",
-  GET: "/category/:id",
-  UPDATE: "/category/:id",
-  DELETE: "/category/:id",
+  LIST: "/establishment/:establishmentId/category",
+  CREATE: "/establishment/:establishmentId/category",
+  GET: "/establishment/:establishmentId/category/:id",
+  UPDATE: "/establishment/:establishmentId/category/:id",
+  DELETE: "/establishment/:establishmentId/category/:id",
 }
 
 export interface Category extends Base {

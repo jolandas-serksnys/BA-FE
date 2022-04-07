@@ -11,15 +11,15 @@ export const GuestGuard = (props: any) => {
     )
   }
 
-  if (user.isEmployee) {
-    return (
-      <Navigate to="/e" replace />
-    );
-  }
+  if (user) {
+    if (user.isEmployee) {
+      return (
+        <Navigate to="/e" replace />
+      );
+    }
 
-  if (user.isEmployee) {
     return (
-      <Navigate to="/" replace />
+      <Navigate to="/menu" replace />
     );
   }
 

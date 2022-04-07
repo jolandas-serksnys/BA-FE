@@ -19,9 +19,11 @@ export const Table = ({ headers, rows }: Props) => {
     <div className={clsx('delish-table-container')}>
       <table className={clsx('delish-table', css`--columns: ${columns};`)}>
         <thead className='delish-table-header'>
-          {headers.map((header) => (
-            <Column key={header.title} style={header.style}>{header.title}</Column>
-          ))}
+          <tr>
+            {headers.map((header) => (
+              <Column key={header.title} style={header.style}>{header.title}</Column>
+            ))}
+          </tr>
         </thead>
         <tbody className="delish-table-body">
           {rows}

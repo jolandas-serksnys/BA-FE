@@ -10,7 +10,7 @@ import { OrdersPage as EmployeeOrdersPage } from "@src/components/pages/employee
 
 export const Routes = () => (
   <RoutesMain>
-    <Route path='/' element={<ClaimTablePage />} />
+    <Route path='/' element={<GuestGuard><ClaimTablePage /></GuestGuard>} />
     <Route path='/menu' element={<UserGuard><MenuPage /></UserGuard>} />
     <Route path='/orders' element={<UserGuard><CustomerOrdersPage /></UserGuard>} />
 
