@@ -18,7 +18,7 @@ export const EmployeeAccount = ({ onClose }: Props): JSX.Element => {
   const [showForm, setShowForm] = useState<string>(undefined);
   const { user: userGeneric, signOut, updatedEmployeeData } = useAuth();
   const user = userGeneric as Employee;
-  const { data: establishment, isLoading } = useGetEstablishement(user.establishmentId);
+  const { data: establishment } = useGetEstablishement();
 
   const handleSubmit = async (values: any, helpers: any) => {
     switch (showForm) {

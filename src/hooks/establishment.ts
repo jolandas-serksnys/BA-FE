@@ -6,12 +6,16 @@ import { URL } from "@src/models/establishment";
 
 export const establishmentQueryKey = 'establishment';
 
-export const model = () => ({
-  get: async (id: number): Promise<Establishment> => {
-    return await api.get(generatePath(URL.GET, { id: String(id) })).then((response) => response?.data);
-  }
-});
+export const model = () => {
+  const establishmentId = process.env.ESTABLISHMENT_ID;
 
-export const useGetEstablishement = (id: number) => {
-  return useQuery(establishmentQueryKey, () => model().get(id));
+  return ({
+    get: async (): Promise<Establishment> => {
+      return await api.get(generatePath(URL.GET, { id: establishmentId })).then((response) => response?.data);
+    }
+  });
+};
+
+export const useGetEstablishement = () => {
+  return useQuery(establishmentQueryKey, () => model().get());
 };

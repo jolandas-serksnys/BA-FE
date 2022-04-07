@@ -4,10 +4,10 @@ import { Statistics, Tables, Categories, Employees, Establishment } from "./Sect
 
 export const AdminPage = () => (
   <Layout>
-    <Statistics />
+    <Establishment />
+    {/* <Statistics /> */}
     <Tables />
     <Categories />
-    <Employees />
-    <Establishment />
+    {/* <Employees /> */}
   </Layout>
 );

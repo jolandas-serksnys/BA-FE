@@ -14,7 +14,7 @@ export const Card = ({ header, body, noBodyClass, footer, ...otherProps }: Props
     <div {...otherProps} className={clsx('card', otherProps.className)}>
       {header &&
         <div className="card-header">
-          {header}
+          <strong className="section-heading">{header}</strong>
         </div>
       }
       {body &&
