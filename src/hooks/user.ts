@@ -4,27 +4,34 @@ import { Employee, URL as EmployeeURL } from "@src/models/employee";
 import { URL as UserURL } from "@src/models/user";
 import api from "@src/utils/api";
 import { useMutation, useQuery } from "react-query";
-import { useNavigate } from 'react-router-dom';
+import { generatePath, useNavigate } from 'react-router-dom';
 
 export const userQueryKey = 'user';
 
-export const model = () => ({
-  employeeUpdateAccount: async (data: any): Promise<Employee> => {
-    return api.post(EmployeeURL.UPDATE_ACCOUNT, data).then((response) => response?.data);
-  },
-  getCurrentUser: async () => {
-    return api.get(UserURL.CURRENT).then((response) => response?.data);
-  },
-  signInCustomer: async (data: any): Promise<CustomerApiResponse> => {
-    return api.post(CustomerURL.SIGN_IN, data).then((response) => response?.data);
-  },
-  signInEmployee: async (data: any) => {
-    return api.post(EmployeeURL.SIGN_IN, data).then((response) => response?.data);
-  },
-  signUpEmployee: async (data: any) => {
-    return api.post(EmployeeURL.SIGN_UP, data).then((response) => response?.data);
-  }
-});
+export const model = () => {
+  const establishmentId = process.env.ESTABLISHMENT_ID;
+
+  return ({
+    getCurrentUser: async () => {
+      return api.get(UserURL.CURRENT).then((response) => response?.data);
+    },
+    signInCustomer: async (data: any): Promise<CustomerApiResponse> => {
+      return api.post(generatePath(CustomerURL.SIGN_IN, { establishmentId }), data).then((response) => response?.data);
+    },
+    signInEmployee: async (data: any) => {
+      return api.post(EmployeeURL.SIGN_IN, data).then((response) => response?.data);
+    },
+    signUpEmployee: async (data: any) => {
+      return api.post(generatePath(EmployeeURL.SIGN_UP, { establishmentId }), data).then((response) => response?.data);
+    },
+    employeeUpdateAccount: async (data: any): Promise<Employee> => {
+      return api.post(EmployeeURL.UPDATE_ACCOUNT, data).then((response) => response?.data);
+    },
+    employeeUpdatePassword: async (data: any): Promise<Employee> => {
+      return api.post(EmployeeURL.UPDATE_PASSWORD, data).then((response) => response?.data);
+    },
+  });
+};
 
 
 export const useGetCurrentUser = () => {

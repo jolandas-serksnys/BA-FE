@@ -1,13 +1,13 @@
-import { Base } from "./base";
+import { Base } from './base';
 
 export const URL = {
-  LIST: "/establishment/:establishmentId/category/:categoryId/dish",
-  CREATE: "/establishment/:establishmentId/category/:categoryId/dish",
-  GET: "/establishment/:establishmentId/category/:categoryId/dish/:id",
-  UPDATE: "/establishment/:establishmentId/category/:categoryId/dish/:id",
-  DELETE: "/establishment/:establishmentId/category/:categoryId/dish/:id",
-  TOGGLE_VISIBILITY: "/establishment/:establishmentId/category/:categoryId/dish/:id/toggle-visibility",
-  TOGGLE_AVAILABILITY: "/establishment/:establishmentId/category/:categoryId/dish/:id/toggle-availability",
+  LIST: '/establishment/:establishmentId/category/:categoryId/dish',
+  CREATE: '/establishment/:establishmentId/category/:categoryId/dish',
+  GET: '/establishment/:establishmentId/category/:categoryId/dish/:id',
+  UPDATE: '/establishment/:establishmentId/category/:categoryId/dish/:id',
+  DELETE: '/establishment/:establishmentId/category/:categoryId/dish/:id',
+  TOGGLE_VISIBILITY: '/establishment/:establishmentId/category/:categoryId/dish/:id/toggle-visibility',
+  TOGGLE_AVAILABILITY: '/establishment/:establishmentId/category/:categoryId/dish/:id/toggle-availability',
 }
 
 export interface Option extends Base {

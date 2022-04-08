@@ -1,14 +1,14 @@
-import { Base } from "./base";
-import { Customer } from "./customer";
-import { TableClaim } from "./tableClaim";
+import { Base } from './base';
+import { Customer } from './customer';
+import { TableClaim } from './tableClaim';
 
 export const URL = {
-  ORDER: "/order",
-  CALCULATE_PRICE: "/order/price",
-  TABLE_ORDER: "/order/table",
-  CANCEL: "/order/:id/cancel",
-  ACTIVE: "/order/active",
-  UPDATE_STATUS: "/order/:id/status",
+  ORDER: '/order',
+  CALCULATE_PRICE: '/order/price',
+  TABLE_ORDER: '/order/table',
+  CANCEL: '/order/:id/cancel',
+  ACTIVE: '/order/active',
+  UPDATE_STATUS: '/order/:id/status',
 }
 
 export interface OrderAddon extends Base {

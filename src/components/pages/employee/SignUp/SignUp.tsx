@@ -28,7 +28,7 @@ export const SignUpPage = () => {
                   lastName: '',
                   password: '',
                   passwordConfirmation: '',
-                  employeeCode: '',
+                  signUpCode: '',
                 }}
                 onSubmit={handleSubmit}
                 validationSchema={validationSchema}
@@ -79,9 +79,9 @@ export const SignUpPage = () => {
                   <div>
                     <Input
                       type="password"
-                      name="employeeCode"
-                      id="employeeCode"
-                      placeholder="Employee code"
+                      name="signUpCode"
+                      id="signUpCode"
+                      placeholder="Sign up code"
                       note="This is the code your employer gave your. Contact your employer if they had not given you a code."
                     />
                   </div>

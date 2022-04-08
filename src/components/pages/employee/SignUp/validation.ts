@@ -7,5 +7,5 @@ export const validationSchema = yup.object({
   lastName: yup.string().required(ValidationMessage.FIELD_REQUIRED),
   password: yup.string().required(ValidationMessage.FIELD_REQUIRED),
   passwordConfirmation: yup.string().oneOf([yup.ref('password')], ValidationMessage.PASSWORD_CONFIRMATION).required(ValidationMessage.FIELD_REQUIRED),
-  employeeCode: yup.string().required(ValidationMessage.FIELD_REQUIRED)
+  signUpCode: yup.string().required(ValidationMessage.FIELD_REQUIRED)
 })

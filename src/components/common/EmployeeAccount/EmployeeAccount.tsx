@@ -32,6 +32,16 @@ export const EmployeeAccount = ({ onClose }: Props): JSX.Element => {
         }
         break;
 
+      case 'password':
+        try {
+          const updatedData = await model().employeeUpdatePassword(values);
+          updatedEmployeeData(updatedData);
+          setShowForm(undefined);
+        } catch (error) {
+          console.log(error);
+        }
+        break;
+
       default:
         break;
     }
@@ -79,9 +89,9 @@ export const EmployeeAccount = ({ onClose }: Props): JSX.Element => {
               }
               {showForm === 'password' &&
                 <>
-                  <Input name="currentPassword" label="Current Password" />
-                  <Input name="password" label="New Password" />
-                  <Input name="passwordConfirmation" label="Repeat New Password" />
+                  <Input name="currentPassword" label="Current Password" type="password" />
+                  <Input name="password" label="New Password" type="password" />
+                  <Input name="passwordConfirmation" label="Repeat New Password" type="password" />
                 </>
               }
             </div>

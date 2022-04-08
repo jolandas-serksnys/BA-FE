@@ -1,9 +1,10 @@
-import { User } from "./user";
+import { User } from './user';
 
 export const URL = {
-  SIGN_IN: "/e/sign-in",
-  SIGN_UP: "/e/sign-up",
-  UPDATE_ACCOUNT: "/e/update-account",
+  SIGN_IN: '/employee/sign-in',
+  SIGN_UP: '/establishment/:establishmentId/employee/sign-up',
+  UPDATE_ACCOUNT: '/employee/update-account',
+  UPDATE_PASSWORD: '/employee/update-password',
 }
 
 export enum EmployeeRole {

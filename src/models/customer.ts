@@ -1,7 +1,7 @@
 import { User } from "./user";
 
 export const URL = {
-  SIGN_IN: '/sign-in'
+  SIGN_IN: '/establishment/:establishmentId/sign-in'
 }
 
 export interface Customer extends User {

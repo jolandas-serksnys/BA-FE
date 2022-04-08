@@ -1,9 +1,9 @@
-import { Base } from "./base";
-import { Customer } from "./customer";
-import { Table } from "./table";
+import { Base } from './base';
+import { Customer } from './customer';
+import { Table } from './table';
 
 export const URL = {
-  CLAIMED: "/claimed",
+  CLAIMED: '/claimed',
 }
 
 export interface TableClaim extends Base {

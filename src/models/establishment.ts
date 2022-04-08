@@ -1,11 +1,11 @@
-import { Base } from "./base";
+import { Base } from './base';
 
 export const URL = {
-  LIST: "/establishment",
-  CREATE: "/establishment",
-  GET: "/establishment/:id",
-  UPDATE: "/establishment/:id",
-  DELETE: "/establishment/:id",
+  LIST: '/establishment',
+  CREATE: '/establishment',
+  GET: '/establishment/:id',
+  UPDATE: '/establishment/:id',
+  DELETE: '/establishment/:id',
 }
 
 export interface Establishment extends Base {

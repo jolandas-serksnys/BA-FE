@@ -1,8 +1,8 @@
-import { Base } from "./base";
+import { Base } from './base';
 
 export const URL = {
-  CURRENT: "/user",
-  REFRESH: "/refresh",
+  CURRENT: '/user',
+  REFRESH: '/refresh',
 }
 
 export interface User extends Base {
