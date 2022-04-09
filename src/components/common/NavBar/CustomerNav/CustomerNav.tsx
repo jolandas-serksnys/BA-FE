@@ -22,7 +22,8 @@ export const CustomerNav = ({ user }: Props) => {
         <span className="d-block">Hi there, <strong className="text-dark">{user.displayName}</strong></span>
         {table &&
           <div className="d-flex gap-3 align-items-center justify-content-end">
-            <small>{table.displayName} <strong>#{String(table.id).padStart(4, '0')}</strong></small>
+            {tableClaim.requestsEnabled && <small>Table access code <strong>{tableClaim.requestCode}</strong></small>}
+            {/* <small>{table.displayName} <strong>#{String(table.id).padStart(4, '0')}</strong></small> */}
             <div className="avatar-group">
               {tableClaim && [user, ...tableClaim.customers.filter((customer) => customer.id !== user.id)].map((customer) => (
                 <div className={clsx('avatar avatar-24 rounded-circle border border-2 border-light', (customer.id === tableClaim.ownerId ? 'bg-secondary text-white' : 'bg-gray text-dark'))} key={customer.id}>
