@@ -22,3 +22,8 @@ export interface Table extends Base {
 export interface TableRequest extends Table {
   useId: boolean;
 }
+
+export interface TableAccessCheckResponse extends Table {
+  seatsTaken?: number;
+  requestsEnabled?: boolean;
+}

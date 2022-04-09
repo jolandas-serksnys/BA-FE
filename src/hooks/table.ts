@@ -1,4 +1,4 @@
-import { Table, URL } from "@src/models/table";
+import { Table, TableAccessCheckResponse, URL } from "@src/models/table";
 import api from "@src/utils/api";
 import { useMutation, useQuery } from "react-query";
 import { generatePath } from "react-router-dom";
@@ -25,7 +25,7 @@ export const model = () => {
       return await api.delete(generatePath(URL.DELETE, { establishmentId: `${establishmentId}`, id: `${id}` })).then((response) => response?.data);
     },
     checkAvailability: async (id: number) => {
-      return await api.get(generatePath(URL.CHECK_AVAILABILITY, { establishmentId: `${establishmentId}`, id: `${id}` })).then((response) => response?.data);
+      return await api.get<TableAccessCheckResponse>(generatePath(URL.CHECK_AVAILABILITY, { establishmentId: `${establishmentId}`, id: `${id}` })).then((response) => response?.data);
     },
     toggleAvailability: async (id: number) => {
       return await api.post(generatePath(URL.TOGGLE_AVAILABILITY, { establishmentId: `${establishmentId}`, id: `${id}` })).then((response) => response?.data);

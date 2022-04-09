@@ -3,7 +3,8 @@ import { Layout } from "@src/components/common/Layout/Layout";
 import { QRCodeScan } from "@src/components/common/QRScan/QRCodeScan";
 import { useCheckTable } from "@src/hooks/table";
 import { useSignInCustomer } from "@src/hooks/user";
-import { Table } from "@src/models/table";
+import { TableAccessCheckResponse } from "@src/models/table";
+import clsx from "clsx";
 import { Form, Formik } from "formik";
 import React, { useEffect, useState } from "react";
 
@@ -14,7 +15,7 @@ export const ClaimTablePage = () => {
   const [claimMethod, setClaimMethod] = useState("input");
   const [code, setCode] = useState<string | null>(null);
   const [lastCheckedCode, setLastCheckedCode] = useState<string | null>(null);
-  const [table, setTable] = useState<Table | null>(null);
+  const [table, setTable] = useState<TableAccessCheckResponse | null>(null);
 
   const tableCodeLength = 4;
 
@@ -41,7 +42,7 @@ export const ClaimTablePage = () => {
   useEffect(() => {
     if (code !== null && code.length === tableCodeLength && lastCheckedCode !== code) {
       setLastCheckedCode(code);
-      mutateAvailability(parseInt(code));
+      mutateAvailability(Number(code));
     } else if (isErrorAvailability) {
       resetTable();
     }
@@ -113,7 +114,8 @@ export const ClaimTablePage = () => {
               }
               {table && !isLoadingAvailability &&
                 <Card
-                  className="bg-success px-2 text-light"
+                  className={clsx('px-2 text-light', [tableAvailabilityData.requestsEnabled ? 'bg-warning' : 'bg-success'])}
+
                   body={
                     <div className="d-flex justify-content-between align-items-center gap-3">
                       <div className="d-flex align-items-center gap-4">
@@ -121,6 +123,7 @@ export const ClaimTablePage = () => {
                         {/*<h3 className="m-0 section-heading">{table.number}</h3>*/}
                         <div>
                           <strong>{table.displayName}</strong>
+                          {table.requestsEnabled && <div>You have to <strong>request access</strong> before joining this table.</div>}
                           {table.seatsTaken !== undefined && table.seatsTaken === 1 && <div><strong>{table.seatsTaken} other person</strong> is waiting for you at this table!</div>}
                           {table.seatsTaken !== undefined && table.seatsTaken > 1 && <div><strong>{table.seatsTaken} other people</strong> are waiting for you at this table!</div>}
                           {(!table.seatsTaken || table.seatsTaken === 0) && <div>Table is available and ready for you!</div>}
@@ -153,13 +156,24 @@ export const ClaimTablePage = () => {
                         required />
                     </div>
                     <div className="btn-group">
-                      <Button
-                        type="submit"
-                        disabled={isLoadingCustomer || isLoadingAvailability}
-                        isLoading={isLoadingCustomer || isLoadingAvailability}
-                      >
-                        Take me to menu
-                      </Button>
+                      {(!table || (table && !table.requestsEnabled)) &&
+                        <Button
+                          type="submit"
+                          disabled={isLoadingCustomer || isLoadingAvailability}
+                          isLoading={isLoadingCustomer || isLoadingAvailability}
+                        >
+                          Take me to menu
+                        </Button>
+                      }
+                      {table && table.requestsEnabled &&
+                        <Button
+                          type="submit"
+                          disabled={isLoadingCustomer || isLoadingAvailability}
+                          isLoading={isLoadingCustomer || isLoadingAvailability}
+                        >
+                          Request access
+                        </Button>
+                      }
                     </div>
                   </div>
                 }

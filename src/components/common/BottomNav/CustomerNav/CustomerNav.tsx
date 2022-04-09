@@ -14,13 +14,13 @@ export const CustomerNav = () => {
         icon={<IconFactCheck />}
         title={
           <>
-            Orders
+            Table &amp; Orders
             {tableUpdates && <span className="status-indicator bg-primary"></span>}
           </>
         }
         onClick={() => { setUpdates() }}
       />
-      <BottomNavItem to="/bill" icon={<IconReceipt />} title="Bill" />
+      {/* <BottomNavItem to="/bill" icon={<IconReceipt />} title="Bill" /> */}
     </>
   );
 };

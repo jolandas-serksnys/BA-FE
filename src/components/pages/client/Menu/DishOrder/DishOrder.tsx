@@ -4,6 +4,7 @@ import { useTable } from "@src/contexts/tableContext";
 import { useGetDish } from "@src/hooks/dish";
 import { model, useCalculatePrice } from "@src/hooks/order";
 import { Option } from "@src/models/dish";
+import { TableClaimStatus } from "@src/models/tableClaim";
 import { formatPrice } from "@src/utils/formatPrice";
 import clsx from "clsx";
 import { Field, Form, Formik } from "formik";
@@ -84,6 +85,11 @@ export const DishOrder = ({ dishId, categoryId, onClose }: Props) => {
           <DishImage src={data.imageUrl} height="20rem" borderRadius="0.75rem" />
 
           <div className="p-5 pb-3">
+            {tableClaim.status === TableClaimStatus.CLOSED &&
+              <div className="card bg-danger text-white p-3 px-4 mb-4">
+                You may no longer order new dishes, because the staff has closed your closed your table.
+              </div>
+            }
             <h2 className="section-heading">{data.title}</h2>
             <div className="mb-3">
               <h5 className="text-primary"><strong>{data.basePrice == 0.00 ? 'Free' : <>{data.basePrice} &euro;</>}</strong></h5>
@@ -140,7 +146,7 @@ export const DishOrder = ({ dishId, categoryId, onClose }: Props) => {
                     <Button variant="gray" onClick={onClose}>
                       Close
                     </Button>
-                    <Button type="submit" isLoading={isLoading}>
+                    <Button type="submit" isLoading={isLoading} disabled={tableClaim.status === TableClaimStatus.CLOSED}>
                       <div className="d-inline-flex gap-2 align-items-center">
                         <div className="d-inline"><IconShoppingBasket /></div>
                         <span>

@@ -5,12 +5,17 @@ import { useQuery } from "react-query";
 
 export const tableClaimQueryKey = 'table-claim';
 
-const getClaimedTableData = () => {
-  return api.get(TableClaimURL.CLAIMED).then((response) => response?.data);
-};
+export const model = () => ({
+  getClaimed: () => {
+    return api.get(TableClaimURL.CLAIMED).then((response) => response?.data);
+  },
+  toggleAccessRequests: () => {
+    return api.post(TableClaimURL.TOGGLE_ACCESS_REQUESTS).then((response) => response?.data);
+  }
+});
 
 export const useGetClaimedTableData = () => {
   const { user } = useAuth();
 
-  return useQuery(tableClaimQueryKey, getClaimedTableData, { enabled: user !== null && !user.isEmployee });
+  return useQuery(tableClaimQueryKey, model().getClaimed, { enabled: user !== null && !user.isEmployee });
 };
