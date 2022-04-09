@@ -19,8 +19,8 @@ export const ClaimTablePage = () => {
 
   const tableCodeLength = 4;
 
-  const handleSubmit = ({ displayName }: { displayName: string }) => {
-    mutateCustomer({ tableId: String(code || table.id), displayName: displayName });
+  const handleSubmit = ({ displayName, requestCode }: { displayName: string, requestCode: string }) => {
+    mutateCustomer({ tableId: String(code || table.id), displayName, requestCode });
   };
 
   const handleOnResult = (result: any, error: any) => {
@@ -59,7 +59,7 @@ export const ClaimTablePage = () => {
     <Layout noHeader noFooter className="py-5">
       <div className="row d-flex h-100 align-items-center justify-content-center">
         <div className="d-flex col-12 col-lg-6 flex-column justify-content-center">
-          <Formik initialValues={{ displayName: '' }} onSubmit={handleSubmit}>
+          <Formik initialValues={{ displayName: '', requestCode: '' }} onSubmit={handleSubmit}>
             <Form className="d-flex flex-column gap-3">
               {(!table || isLoadingAvailability) &&
                 <Card
@@ -146,15 +146,22 @@ export const ClaimTablePage = () => {
               <Card
                 body={
                   <div className="d-flex flex-column gap-3">
-                    <div>
+                    <Input
+                      type="text"
+                      name="displayName"
+                      id="displayName"
+                      placeholder="Your name"
+                      required
+                    />
+                    {table && table.requestsEnabled &&
                       <Input
                         type="text"
-                        name="displayName"
-                        id="displayName"
-                        placeholder="Your name"
-
-                        required />
-                    </div>
+                        name="requestCode"
+                        id="requestCode"
+                        placeholder="Table access code"
+                        required
+                      />
+                    }
                     <div className="btn-group">
                       {(!table || (table && !table.requestsEnabled)) &&
                         <Button

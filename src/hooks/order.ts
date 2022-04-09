@@ -24,7 +24,10 @@ export const model = () => ({
   },
   updateStatus: async (id: number, status: CustomerOrderStatus) => {
     return api.post(generatePath(URL.UPDATE_STATUS, { id: `${id}` }), { status }).then((response) => response?.data);
-  }
+  },
+  toggleTableOrderClaim: async (id: number) => {
+    return api.post(generatePath(URL.TOGGLE_TABBLE_ORDER_CLAIM, { id: `${id}` })).then((response) => response?.data);
+  },
 });
 
 export const useCalculatePrice = (options: any) => {
@@ -40,3 +43,4 @@ export const useGetTableOrder = (id: number) => {
 export const useGetActiveTableOrders = () => {
   return useQuery(activeOrdersQueryKey, model().active);
 };
+

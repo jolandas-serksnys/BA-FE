@@ -9,6 +9,7 @@ export const URL = {
   CANCEL: '/order/:id/cancel',
   ACTIVE: '/order/active',
   UPDATE_STATUS: '/order/:id/status',
+  TOGGLE_TABBLE_ORDER_CLAIM: '/order/table/:id/toggle'
 }
 
 export interface OrderAddon extends Base {

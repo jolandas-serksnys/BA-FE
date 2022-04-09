@@ -1,16 +1,17 @@
 import { Button, SectionHeader } from "@src/components/common";
 import { Layout } from "@src/components/common/Layout";
-import { IconAlert } from "@src/components/icons";
-import { useGetActiveTableOrders } from "@src/hooks/order";
+import { model, useGetActiveTableOrders } from "@src/hooks/order";
 import { TableOrder } from "@src/models/order";
+import { TableClaimStatus } from "@src/models/tableClaim";
 import React, { useEffect, useState } from "react";
-import { Accordion, Alert, Col, Form, Nav, Row, Tab } from "react-bootstrap";
+import { Accordion, Col, Form, Nav, Row, Tab } from "react-bootstrap";
 import { CustomerOrder } from "./CustomerOrder";
 
 export const OrdersPage = () => {
   const [filterQuery, setFilterQuery] = useState<string>('');
   const [filteredOrders, setFilteredOrders] = useState<TableOrder[]>(null);
-  const { data, isLoading, error } = useGetActiveTableOrders();
+  const { data, isLoading: isLoadingData, error } = useGetActiveTableOrders();
+  const [isLoading, setIsLoading] = useState(false);
 
   const updateFilteredOrders = () => {
     if (filterQuery === '') {
@@ -30,12 +31,18 @@ export const OrdersPage = () => {
     updateFilteredOrders();
   }, [data, filterQuery]);
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoadingData) return <div>Loading...</div>;
   if (error || !data) return <div>Error!</div>;
 
   const handleFilter = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     setFilterQuery(value);
+  };
+
+  const toggleTableOrderClaim = async (orderId: number) => {
+    setIsLoading(true);
+    await model().toggleTableOrderClaim(orderId);
+    setIsLoading(false);
   };
 
   return (
@@ -97,7 +104,16 @@ export const OrdersPage = () => {
                           {item.customer_orders.map((order, index) => <CustomerOrder key={index} index={index} order={order} />)}
                         </Accordion>
                         <div className="d-flex gap-3 mt-3 align-items-center justify-content-between">
-                          <Button outline variant="danger" size="sm">Close this table order</Button>
+                          <Button
+                            outline
+                            variant="danger"
+                            size="sm"
+                            onClick={() => toggleTableOrderClaim(item.id)}
+                            isLoading={isLoading}
+                            disabled={isLoading}
+                          >
+                            {item.table_claim.status === TableClaimStatus.ACTIVE ? 'Close' : 'Reopen'} this table order
+                          </Button>
                         </div>
                       </Tab.Pane>
                     ))}

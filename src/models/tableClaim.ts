@@ -20,4 +20,5 @@ export interface TableClaim extends Base {
   table: Table;
   requestsEnabled: boolean;
   status: TableClaimStatus;
+  requestCode: string;
 }
