@@ -80,8 +80,15 @@ export const Order = ({ order }: Props) => {
         }
       </div>
 
+      {order.comment &&
+        <div className="mt-3">
+          <h6>Customer comment</h6>
+          <div>{order.comment}</div>
+        </div>
+      }
+
       <div className="d-flex justify-content-between mt-2">
-        <div>Base price</div>
+        <h6>Base price</h6>
         <div>{order.price} &euro;</div>
       </div>
       {order.order_addons && order.order_addons.length > 0 &&

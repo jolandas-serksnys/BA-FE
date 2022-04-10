@@ -18,6 +18,7 @@ export const OrdersPage = () => {
   const [isLoadingToggle, setIsLoadingToggle] = useState(false);
   const { data, isLoading, mutate } = useCustomerOrders(filterProps);
   const [activeOrder, setActiveOrder] = useState(0);
+  const [acticeCustomerOrder, setActiceCustomerOrder] = useState(0);
 
   useEffect(() => {
     mutate();
@@ -109,7 +110,10 @@ export const OrdersPage = () => {
                     <Nav variant="pills" className="flex-column mb-3 gap-1">
                       {data && data.map((item, index) => (
                         <Nav.Item key={item.id}>
-                          <Nav.Link eventKey={index} onClick={() => setActiveOrder(index)}>
+                          <Nav.Link eventKey={index} onClick={() => {
+                            setActiveOrder(index);
+                            setActiceCustomerOrder(0);
+                          }}>
                             <div className="d-flex justify-content-between align-items-center gap-3">
                               <div>
                                 <strong className="d-block">{item.table_claim.table.displayName}</strong>
@@ -144,8 +148,8 @@ export const OrdersPage = () => {
                           </Alert>
                             */
                           }
-                          <Accordion defaultActiveKey="0">
-                            {item.customer_orders.map((order, index) => <CustomerOrder key={index} index={index} order={order} />)}
+                          <Accordion defaultActiveKey="0" activeKey={`${acticeCustomerOrder}`}>
+                            {item.customer_orders.map((order, index) => <CustomerOrder key={index} index={index} order={order} setActiceCustomerOrder={setActiceCustomerOrder} />)}
                           </Accordion>
                           <div className="d-flex gap-3 mt-3 align-items-center justify-content-between">
                             <Button

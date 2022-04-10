@@ -1,4 +1,4 @@
-import { Button } from "@src/components/common";
+import { Button, Input } from "@src/components/common";
 import { IconShoppingBasket } from "@src/components/icons";
 import { useTable } from "@src/contexts/tableContext";
 import { useGetDish } from "@src/hooks/dish";
@@ -62,7 +62,7 @@ export const DishOrder = ({ dishId, categoryId, onClose }: Props) => {
         tableClaimId: tableClaim.id,
         dishId,
         options,
-        comment: ''
+        comment: values.comment
       });
       onClose();
     } catch (error) {
@@ -109,7 +109,8 @@ export const DishOrder = ({ dishId, categoryId, onClose }: Props) => {
           <Formik
             onSubmit={handleSubmit}
             initialValues={{
-              addon: []
+              addon: [],
+              comment: ''
             }}
           >
             {({ values }) => (
@@ -149,6 +150,19 @@ export const DishOrder = ({ dishId, categoryId, onClose }: Props) => {
                     </div>
                   </div>
                 }
+
+                <div className="p-4 px-5 border-top border-gray mt-2">
+                  <div className="row">
+                    <div>
+                      <Input
+                        type="text"
+                        name="comment"
+                        placeholder="Please serve this cold..."
+                        label="Comment"
+                      />
+                    </div>
+                  </div>
+                </div>
 
                 <div className="pb-2 sticky-bottom">
                   <div className="d-flex gap-2 flex-equal-2 p-2 mx-3 rounded shadow-sm bg-white">

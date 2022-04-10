@@ -8,9 +8,10 @@ import { Accordion, Dropdown } from "react-bootstrap";
 interface Props {
   order: Model;
   index: number;
+  setActiceCustomerOrder: (index: number) => void;
 }
 
-export const CustomerOrder = ({ order: data, index }: Props) => {
+export const CustomerOrder = ({ order: data, index, setActiceCustomerOrder }: Props) => {
   const [order, setOrder] = useState(data);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -47,12 +48,17 @@ export const CustomerOrder = ({ order: data, index }: Props) => {
 
   return (
     <Accordion.Item eventKey={`${index}`} key={index}>
-      <Accordion.Header>
+      <Accordion.Header onClick={() => setActiceCustomerOrder(index)}>
         <div className="d-flex justify-content-between w-100 pe-3">
           <div className="d-flex gap-3 align-items-center">
-            {order.status &&
-              <div className={clsx('badge', statusLabelClass)}>{capitalize(order.status)}</div>
-            }
+            <div className="d-flex gap-1">
+              {order.status &&
+                <div className={clsx('badge', statusLabelClass)}>{capitalize(order.status)}</div>
+              }
+              {order.comment &&
+                <div className="badge bg-warning">!</div>
+              }
+            </div>
             {order.title}
           </div>
           <div>
@@ -83,10 +89,16 @@ export const CustomerOrder = ({ order: data, index }: Props) => {
             </Dropdown>
           </div>
           <hr className="my-2" />
-          <div className="d-flex justify-content-between">
+          {order.comment &&
+            <div>
+              <h6>Customer comment</h6>
+              <div>{order.comment}</div>
+            </div>
+          }
+          <h6 className="d-flex justify-content-between">
             <div>Base price</div>
             <div>{order.price} &euro;</div>
-          </div>
+          </h6>
           {order.order_addons && order.order_addons.length > 0 &&
             <div>
               {order.order_addons.map((item, index) => (
