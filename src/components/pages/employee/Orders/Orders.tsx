@@ -16,8 +16,12 @@ export const OrdersPage = () => {
     dateTo: '',
   });
   const [isLoadingToggle, setIsLoadingToggle] = useState(false);
-  const { data, mutate } = useCustomerOrders(filterProps);
+  const { data, isLoading, mutate } = useCustomerOrders(filterProps);
   const [activeOrder, setActiveOrder] = useState(0);
+
+  useEffect(() => {
+    mutate();
+  }, []);
 
   useEffect(() => {
     if (tableUpdates) {
@@ -25,6 +29,10 @@ export const OrdersPage = () => {
       setUpdates(false);
     }
   }, [mutate, tableUpdates]);
+
+  useEffect(() => {
+    mutate()
+  }, [filterProps]);
 
   const toggleTableOrderClaim = async (orderId: number) => {
     setIsLoadingToggle(true);
@@ -40,6 +48,14 @@ export const OrdersPage = () => {
     setSubmitting(false);
   };
 
+  const handleFilterReset = async () => {
+    setFilterProps({
+      query: '',
+      dateFrom: '',
+      dateTo: '',
+    });
+  };
+
   return (
     <Layout>
       <div className="d-flex flex-column">
@@ -50,9 +66,9 @@ export const OrdersPage = () => {
               initialValues={filterProps}
               onSubmit={handleFilter}
             >
-              {({ handleSubmit }) => (
+              {({ handleSubmit, resetForm }) => (
                 <Form onSubmit={handleSubmit} className="mb-3">
-                  <div className="d-flex gap-3 flex-column flex-md-row">
+                  <div className="d-flex gap-3 flex-column flex-lg-row">
                     <Input
                       type="search"
                       placeholder="Search..."
@@ -71,14 +87,22 @@ export const OrdersPage = () => {
                       name="dateTo"
                       id="dateTo"
                     />
-                    <Button type="submit" variant="primary" className="text-nowrap">
-                      Filter orders
-                    </Button>
+                    <div className="d-flex gap-3">
+                      <Button type="submit" variant="primary" className="text-nowrap">
+                        Filter
+                      </Button>
+                      <Button type="button" variant="primary" className="text-nowrap" onClick={() => {
+                        handleFilterReset();
+                        resetForm();
+                      }}>
+                        Clear
+                      </Button>
+                    </div>
                   </div>
                 </Form>
               )}
             </Formik>
-            {data &&
+            {data && data.length !== 0 &&
               <Tab.Container defaultActiveKey={activeOrder}>
                 <Row>
                   <Col lg={4}>
@@ -142,9 +166,19 @@ export const OrdersPage = () => {
                 </Row>
               </Tab.Container>
             }
+            {(!data || data.length === 0) && !isLoading &&
+              <div className="rounded border p-5 text-center">
+                <h5 className="mb-0">No orders found</h5>
+              </div>
+            }
+            {isLoading &&
+              <div className="rounded border p-5 text-center">
+                <h5 className="mb-0">Loading data...</h5>
+              </div>
+            }
           </div>
         </div>
       </div>
-    </Layout>
+    </Layout >
   );
 };
