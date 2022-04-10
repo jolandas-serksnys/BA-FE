@@ -1,6 +1,6 @@
 import { CustomerOrderStatus, TableOrder, URL } from "@src/models/order";
 import api from "@src/utils/api";
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { generatePath } from "react-router-dom";
 
 export const orderClaimQueryKey = 'order';
@@ -19,8 +19,8 @@ export const model = () => ({
   cancel: async (id: number) => {
     return api.post<TableOrder>(URL.CANCEL, { id }).then((response) => response?.data);
   },
-  active: async () => {
-    return api.get<TableOrder[]>(URL.ACTIVE).then((response) => response?.data);
+  active: async (query?: string, dateFrom?: string, dateTo?: string) => {
+    return api.post<TableOrder[]>(URL.ACTIVE, { query, dateFrom, dateTo }).then((response) => response?.data);
   },
   updateStatus: async (id: number, status: CustomerOrderStatus) => {
     return api.post(generatePath(URL.UPDATE_STATUS, { id: `${id}` }), { status }).then((response) => response?.data);
@@ -40,7 +40,19 @@ export const useGetTableOrder = (id: number) => {
   return useQuery(orderClaimQueryKey, () => model().getTableOrder(id));
 };
 
-export const useGetActiveTableOrders = () => {
-  return useQuery(activeOrdersQueryKey, model().active);
+export const useGetActiveTableOrders = (query?: string, dateFrom?: string, dateTo?: string) => {
+  return useQuery(activeOrdersQueryKey, () => model().active(query, dateFrom, dateTo));
+};
+
+interface CustomerOrderFilterProps {
+  query?: string;
+  dateFrom?: string;
+  dateTo?: string;
+}
+
+export const useCustomerOrders = ({ query, dateFrom, dateTo }: CustomerOrderFilterProps) => {
+  return useMutation(() => model().active(query, dateFrom, dateTo), {
+    mutationKey: activeOrdersQueryKey,
+  });
 };
 
