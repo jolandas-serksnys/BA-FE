@@ -1,5 +1,5 @@
 import { Button, CardTitle, Input } from "@src/components/common";
-import { Table } from "@src/models/table";
+import { Dish } from "@src/models/dish";
 import { Field, Formik } from "formik";
 import React from "react"
 import { Modal } from "react-bootstrap";
@@ -8,13 +8,13 @@ import { validationSchema } from "./validation";
 interface Props {
   title: string;
   subTitle: string;
-  initialValues: Table;
+  initialValues: Dish;
   onSubmit: (values: any, helpers: any) => void;
   onClose: () => void;
   isLoading?: boolean;
 }
 
-export const TableModal = ({ title, subTitle, initialValues, onSubmit, onClose, isLoading }: Props) => (
+export const DishModal = ({ title, subTitle, initialValues, onSubmit, onClose, isLoading }: Props) => (
   <Modal
     show
     onHide={onClose}
@@ -36,26 +36,26 @@ export const TableModal = ({ title, subTitle, initialValues, onSubmit, onClose, 
         <>
           <div className="p-4 px-5">
             <div className="mb-3">
-              <Input type="text" id="displayName" name="displayName" aria-describedby="displayName" label="Display name" />
+              <Input type="text" id="title" name="title" aria-describedby="title" label="Title" />
             </div>
             <div className="mb-3">
-              <Input type="number" id="number" name="number" aria-describedby="number" label="Table number" disabled={values.useId} />
+              <Input type="text" id="description" name="description" aria-describedby="description" label="Description" />
+            </div>
+            <div className="mb-3">
+              <Input type="text" id="ageRestriction" name="ageRestriction" aria-describedby="ageRestriction" label="Restriction tag" />
             </div>
             <div className="mb-3">
               <div className="form-check d-flex gap-3 align-items-center m-0 p-0">
                 <Field
                   type="checkbox"
-                  id="useId"
-                  name="useId"
+                  id="isVisible"
+                  name="isVisible"
                   className="form-check-input p-2 m-0"
                 />
-                <label className="form-check-label" htmlFor="useId">
-                  Use table ID as code
+                <label className="form-check-label" htmlFor="isVisible">
+                  Is visible to customers
                 </label>
               </div>
-            </div>
-            <div className="mb-3">
-              <Input type="number" id="seats" name="seats" aria-describedby="seats" label="Seats" />
             </div>
             <div className="mb-3">
               <div className="form-check d-flex gap-3 align-items-center m-0 p-0">
@@ -66,9 +66,15 @@ export const TableModal = ({ title, subTitle, initialValues, onSubmit, onClose, 
                   className="form-check-input p-2 m-0"
                 />
                 <label className="form-check-label" htmlFor="isAvailable">
-                  Table is accepting customers
+                  Is available for order
                 </label>
               </div>
+            </div>
+            <div className="mb-3">
+              <Input type="text" id="imageUrl" name="imageUrl" aria-describedby="imageUrl" label="Image URL" />
+            </div>
+            <div className="mb-3">
+              <Input type="number" id="basePrice" name="basePrice" aria-describedby="basePrice" label="Base price" />
             </div>
           </div>
 

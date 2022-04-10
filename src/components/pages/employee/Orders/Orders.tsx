@@ -88,10 +88,10 @@ export const OrdersPage = () => {
                       id="dateTo"
                     />
                     <div className="d-flex gap-3">
-                      <Button type="submit" variant="primary" className="text-nowrap">
+                      <Button type="submit" className="text-nowrap">
                         Filter
                       </Button>
-                      <Button type="button" variant="primary" className="text-nowrap" onClick={() => {
+                      <Button type="button" className="text-nowrap" onClick={() => {
                         handleFilterReset();
                         resetForm();
                       }}>

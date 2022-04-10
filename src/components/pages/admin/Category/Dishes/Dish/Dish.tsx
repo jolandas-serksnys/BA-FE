@@ -5,9 +5,11 @@ import { Dish as Model } from "@src/models/dish";
 import { Badge } from "react-bootstrap";
 import { queryClient } from "@src/utils";
 import { categoriesQueryKey, model } from "@src/hooks/dish";
+import { EditDishModal } from "../DishModal";
 
 export const Dish = (item: Model) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
 
   const toggleAvailability = async () => {
     setIsLoading(true);
@@ -40,17 +42,46 @@ export const Dish = (item: Model) => {
         </Column>
         <Column>
           <div className="d-flex justify-content-end gap-2">
-            <Button size="xs" outline borderless variant="primary" className="px-2 text-nowrap" onClick={toggleAvailability} isLoading={isLoading} disabled={isLoading}>
+            <Button
+              size="xs"
+              outline
+              borderless
+              variant="primary"
+              className="px-2 text-nowrap"
+              onClick={toggleAvailability}
+              isLoading={isLoading}
+              disabled={isLoading}
+            >
               {item.isAvailable ? 'Disable' : 'Enable'}
             </Button>
-            <Button size="xs" outline borderless variant="primary" className="px-2 text-nowrap" onClick={toggleVisibility} isLoading={isLoading} disabled={isLoading}>
+            <Button
+              size="xs"
+              outline
+              borderless
+              variant="primary"
+              className="px-2 text-nowrap"
+              onClick={toggleVisibility}
+              isLoading={isLoading}
+              disabled={isLoading}
+            >
               {item.isVisible ? 'Hide' : 'Show'}
             </Button>
-            <Button size="xs" outline borderless variant="primary"><IconEdit /></Button>
+            <Button
+              size="xs"
+              outline
+              borderless
+              variant="primary"
+              onClick={() => setShowEditModal(true)}
+            >
+              <IconEdit />
+            </Button>
             <Button size="xs" outline borderless variant="danger"><IconDelete /></Button>
           </div>
         </Column>
       </Row>
+      {showEditModal &&
+        <EditDishModal item={item} categoryId={item.categoryId} onClose={() => setShowEditModal(false)} />
+      }
     </>
   );
 };

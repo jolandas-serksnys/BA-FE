@@ -10,19 +10,50 @@ export const model = () => {
 
   return ({
     index: async (categoryId: number) => {
-      return await api.get<Dish[]>(generatePath(URL.INDEX, { establishmentId: `${establishmentId}`, categoryId: `${categoryId}` })).then((response) => response?.data);
+      return await api.get<Dish[]>(generatePath(URL.INDEX, {
+        establishmentId,
+        categoryId: `${categoryId}`
+      })).then((response) => response?.data);
     },
     indexEmployee: async (categoryId: number) => {
-      return await api.get<Dish[]>(generatePath(URL.INDEX_EMPLOYEE, { establishmentId: `${establishmentId}`, categoryId: `${categoryId}` })).then((response) => response?.data);
+      return await api.get<Dish[]>(generatePath(URL.INDEX_EMPLOYEE, {
+        establishmentId,
+        categoryId: `${categoryId}`
+      })).then((response) => response?.data);
+    },
+    create: async (categoryId: number, dish: Dish) => {
+      return await api.post<Dish>(generatePath(URL.CREATE, {
+        establishmentId,
+        categoryId: `${categoryId}`
+      }), dish).then((response) => response?.data);
+    },
+    update: async (categoryId: number, dish: Dish) => {
+      return await api.put<Dish>(generatePath(URL.UPDATE, {
+        establishmentId,
+        categoryId: `${categoryId}`,
+        id: `${dish.id}`,
+      }), dish).then((response) => response?.data);
     },
     get: async (categoryId: number, id: number) => {
-      return await api.get<Dish>(generatePath(URL.GET, { establishmentId: `${establishmentId}`, categoryId: `${categoryId}`, id: `${id}` })).then((response) => response?.data);
+      return await api.get<Dish>(generatePath(URL.GET, {
+        establishmentId,
+        categoryId: `${categoryId}`,
+        id: `${id}`
+      })).then((response) => response?.data);
     },
     toggleVisibility: async (categoryId: number, id: number) => {
-      return await api.post(generatePath(URL.TOGGLE_VISIBILITY, { establishmentId: `${establishmentId}`, categoryId: `${categoryId}`, id: `${id}` })).then((response) => response?.data);
+      return await api.post(generatePath(URL.TOGGLE_VISIBILITY, {
+        establishmentId,
+        categoryId: `${categoryId}`,
+        id: `${id}`
+      })).then((response) => response?.data);
     },
     toggleAvailability: async (categoryId: number, id: number) => {
-      return await api.post(generatePath(URL.TOGGLE_AVAILABILITY, { establishmentId: `${establishmentId}`, categoryId: `${categoryId}`, id: `${id}` })).then((response) => response?.data);
+      return await api.post(generatePath(URL.TOGGLE_AVAILABILITY, {
+        establishmentId,
+        categoryId: `${categoryId}`,
+        id: `${id}`
+      })).then((response) => response?.data);
     },
   });
 };

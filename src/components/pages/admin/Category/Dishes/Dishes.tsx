@@ -2,8 +2,9 @@ import { Button, Card, SectionHeader, Table } from "@src/components/common";
 import { IconAdd } from "@src/components/icons";
 import { Category } from "@src/models/category";
 import { Dish as Row } from "./Dish";
-import React from "react";
+import React, { useState } from "react";
 import { Dish } from "@src/models/dish";
+import { CreateDishModal } from "./DishModal";
 
 const headers = [
   {
@@ -29,6 +30,8 @@ interface Props {
 }
 
 export const Dishes = ({ category, dishes }: Props) => {
+  const [showModal, setShowModal] = useState(false);
+
   return (
     <>
       <SectionHeader title={category.title} />
@@ -38,7 +41,14 @@ export const Dishes = ({ category, dishes }: Props) => {
         body={
           <>
             <div className="d-flex justify-content-end gap-2 p-2 px-3">
-              <Button variant="link" size="sm" className="p-1"><IconAdd /></Button>
+              <Button
+                variant="link"
+                size="sm"
+                className="p-1"
+                onClick={() => setShowModal(true)}
+              >
+                <IconAdd />
+              </Button>
             </div>
             <Table
               headers={headers}
@@ -49,12 +59,20 @@ export const Dishes = ({ category, dishes }: Props) => {
             <div className="card-body d-flex justify-content-between">
               <div className="d-flex gap-2"></div>
               <div className="d-flex gap-2">
-                <Button size="sm">Add new</Button>
+                <Button
+                  size="sm"
+                  onClick={() => setShowModal(true)}
+                >
+                  Add new
+                </Button>
               </div>
             </div>
           </>
         }
       />
+      {showModal &&
+        <CreateDishModal categoryId={category.id} onClose={() => setShowModal(false)} />
+      }
     </>
   );
 };
