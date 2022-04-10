@@ -41,6 +41,13 @@ export const model = () => {
         id: `${id}`
       })).then((response) => response?.data);
     },
+    delete: async (categoryId: number, id: number) => {
+      return await api.delete<Dish>(generatePath(URL.DELETE, {
+        establishmentId,
+        categoryId: `${categoryId}`,
+        id: `${id}`
+      })).then((response) => response?.data);
+    },
     toggleVisibility: async (categoryId: number, id: number) => {
       return await api.post(generatePath(URL.TOGGLE_VISIBILITY, {
         establishmentId,

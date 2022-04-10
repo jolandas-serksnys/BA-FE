@@ -4,7 +4,7 @@ import { model, tablesQueryKey } from "@src/hooks/table";
 import { Table as Model } from "@src/models/table";
 import { queryClient } from "@src/utils";
 import React, { useState } from "react";
-import { Badge } from "react-bootstrap";
+import { Badge, Dropdown, DropdownButton } from "react-bootstrap";
 import { DeleteTableModal } from "../DeleteTableModal";
 import { EditTableModal } from "../TableModal/EditTableModal";
 
@@ -28,15 +28,37 @@ export const Table = (item: Model) => {
         <Column>{item.displayName}</Column>
         <Column>{item.seats}</Column>
         <Column>
-          {item.isAvailable ? <Badge bg="success">Available</Badge> : <Badge bg="gray" text="dark">Not available</Badge>}
+          <Dropdown>
+            <Dropdown.Toggle variant={item.isAvailable ? 'success text-light' : 'gray'} id="availability-dropdown" className="p-0 px-2 rounded-xs border-0" >
+              {item.isAvailable ? 'Available' : 'Unavailable'}
+            </Dropdown.Toggle>
+            <Dropdown.Menu>
+              <Dropdown.Item onClick={toggleAvailability}>
+                {item.isAvailable ? 'Unavailable' : 'Available'}
+              </Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
         </Column>
         <Column>
           <div className="d-flex justify-content-end gap-2">
-            <Button size="xs" outline borderless variant="primary" className="px-2 text-nowrap" onClick={toggleAvailability} isLoading={isLoading} disabled={isLoading}>
-              {item.isAvailable ? 'Disable' : 'Enable'}
+            <Button
+              size="xs"
+              outline
+              borderless
+              variant="primary"
+              onClick={() => setShowEditModal(true)}
+            >
+              <IconEdit />
             </Button>
-            <Button size="xs" outline borderless variant="primary" onClick={() => setShowEditModal(true)}><IconEdit /></Button>
-            <Button size="xs" outline borderless variant="danger" onClick={() => setShowDeleteModal(true)}><IconDelete /></Button>
+            <Button
+              size="xs"
+              outline
+              borderless
+              variant="danger"
+              onClick={() => setShowDeleteModal(true)}
+            >
+              <IconDelete />
+            </Button>
           </div>
         </Column>
       </Row>

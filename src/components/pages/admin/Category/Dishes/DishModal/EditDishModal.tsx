@@ -7,11 +7,10 @@ import { DishModal } from "./DishModal"
 
 interface Props {
   item: Model;
-  categoryId: number;
   onClose: () => void;
 }
 
-export const EditDishModal = ({ item, categoryId, onClose }: Props) => {
+export const EditDishModal = ({ item, onClose }: Props) => {
   const initialValues = item as Model;
 
   return (
@@ -24,7 +23,7 @@ export const EditDishModal = ({ item, categoryId, onClose }: Props) => {
       onSubmit={async (values, helpers) => {
         try {
           await model().update(item.id, values);
-          await queryClient.invalidateQueries([categoriesQueryKey, 'category', categoryId]);
+          await queryClient.invalidateQueries([categoriesQueryKey, 'category', item.categoryId]);
           onClose();
         } catch (error) {
           toast.error('Something went wrong trying to perform this action.');

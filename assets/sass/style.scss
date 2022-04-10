@@ -5,6 +5,8 @@ $border-radius-sm: .5rem;
 
 $card-border-width: 0;
 
+$dropdown-padding-x: 0.5rem;
+
 $input-btn-border-width: 2px;
 $input-btn-focus-width: 0;
 $input-btn-font-size: 0.9rem;
@@ -106,6 +108,10 @@ body {
   box-shadow: $box-shadow-sm;
 }
 
+.dropdown-item {
+  border-radius: $border-radius-sm;
+}
+
 .form-control.form-control-focus {
   border-color: $input-focus-border-color;
 }
@@ -198,6 +204,10 @@ table.table thead td {
   &:not(.active):hover {
     border-color: $primary !important;
   }
+}
+
+.rounded-xs {
+  border-radius: $badge-border-radius;
 }
 
 .flex-equal-2 > * {

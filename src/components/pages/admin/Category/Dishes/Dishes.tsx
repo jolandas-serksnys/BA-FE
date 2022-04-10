@@ -11,10 +11,21 @@ const headers = [
     title: '',
     width: '50px'
   },
-  { title: 'Title' },
+  {
+    title: 'Title',
+    style: {
+      minWidth: '300px'
+    }
+  },
   { title: 'Restriction' },
-  { title: 'Price' },
-  { title: 'Availability & Visibility' },
+  { title: 'Visibility' },
+  { title: 'Availability' },
+  {
+    title: 'Price',
+    style: {
+      textAlign: 'right',
+    },
+  },
   {
     title: 'Actions',
     width: '200px',
