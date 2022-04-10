@@ -2,6 +2,7 @@ import { css } from "@emotion/css";
 import clsx from "clsx";
 import React from "react"
 import { Column } from "./Column";
+import { Row } from "./Row";
 
 interface Props {
   headers: {
@@ -27,6 +28,15 @@ export const Table = ({ headers, rows }: Props) => {
         </thead>
         <tbody className="delish-table-body">
           {rows}
+          {(!rows || rows.length === 0) &&
+            <Row>
+              <Column colSpan={6}>
+                <div className="text-center text-muted py-3">
+                  No data available
+                </div>
+              </Column>
+            </Row>
+          }
         </tbody>
       </table>
     </div>

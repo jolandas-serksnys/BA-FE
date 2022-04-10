@@ -9,7 +9,7 @@ import { formatPrice } from "@src/utils/formatPrice";
 import clsx from "clsx";
 import { Field, Form, Formik } from "formik";
 import React, { useEffect, useState } from "react"
-import { Modal } from "react-bootstrap"
+import { Badge, Modal } from "react-bootstrap"
 import { DishImage } from "../Dish/Dish.style";
 
 interface Props {
@@ -91,8 +91,17 @@ export const DishOrder = ({ dishId, categoryId, onClose }: Props) => {
               </div>
             }
             <h2 className="section-heading">{data.title}</h2>
-            <div className="mb-3">
-              <h5 className="text-primary"><strong>{data.basePrice == 0.00 ? 'Free' : <>{data.basePrice} &euro;</>}</strong></h5>
+            <div className="mb-3 d-flex gap-3 align-items-center">
+              {data.ageRestriction &&
+                <h5>
+                  <Badge>
+                    {data.ageRestriction}
+                  </Badge>
+                </h5>
+              }
+              <h5 className="text-primary">
+                <strong>{data.basePrice == 0.00 ? 'Free' : <>{data.basePrice} &euro;</>}</strong>
+              </h5>
             </div>
             <div dangerouslySetInnerHTML={{ __html: data.description }}></div>
           </div>

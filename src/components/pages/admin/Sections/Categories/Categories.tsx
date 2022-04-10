@@ -13,7 +13,6 @@ const headers = [
   },
   { title: 'Title' },
   { title: 'Description' },
-  { title: 'Dishes' },
   {
     title: 'Actions',
     width: '100px',

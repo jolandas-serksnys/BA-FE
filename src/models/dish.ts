@@ -1,7 +1,8 @@
 import { Base } from './base';
 
 export const URL = {
-  LIST: '/establishment/:establishmentId/category/:categoryId/dish',
+  INDEX: '/establishment/:establishmentId/category/:categoryId/dish',
+  INDEX_EMPLOYEE: '/establishment/:establishmentId/category/:categoryId/dish/all',
   CREATE: '/establishment/:establishmentId/category/:categoryId/dish',
   GET: '/establishment/:establishmentId/category/:categoryId/dish/:id',
   UPDATE: '/establishment/:establishmentId/category/:categoryId/dish/:id',

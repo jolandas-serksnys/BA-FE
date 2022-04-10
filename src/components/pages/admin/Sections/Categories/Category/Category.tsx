@@ -21,7 +21,6 @@ export const Category = ({ item }: Props) => {
         <Column>{item.id}</Column>
         <Column>{item.title}</Column>
         <Column>{item.description}</Column>
-        <Column>{item.dishes.length}</Column>
         <Column>
           <div className="d-flex justify-content-end gap-2">
             <Link to={`/e/admin/category/${item.id}/dishes`}>

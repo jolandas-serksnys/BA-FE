@@ -10,7 +10,10 @@ export const model = () => {
 
   return ({
     index: async (categoryId: number) => {
-      return await api.get<Dish[]>(generatePath(URL.LIST, { establishmentId: `${establishmentId}`, categoryId: `${categoryId}` })).then((response) => response?.data);
+      return await api.get<Dish[]>(generatePath(URL.INDEX, { establishmentId: `${establishmentId}`, categoryId: `${categoryId}` })).then((response) => response?.data);
+    },
+    indexEmployee: async (categoryId: number) => {
+      return await api.get<Dish[]>(generatePath(URL.INDEX_EMPLOYEE, { establishmentId: `${establishmentId}`, categoryId: `${categoryId}` })).then((response) => response?.data);
     },
     get: async (categoryId: number, id: number) => {
       return await api.get<Dish>(generatePath(URL.GET, { establishmentId: `${establishmentId}`, categoryId: `${categoryId}`, id: `${id}` })).then((response) => response?.data);
@@ -24,8 +27,12 @@ export const model = () => {
   });
 };
 
-export const useGetDishes = (categoryId: number) => {
+export const useIndexDishes = (categoryId: number) => {
   return useQuery([categoriesQueryKey, 'category', categoryId], () => model().index(categoryId));
+};
+
+export const useIndexDishesEmployee = (categoryId: number) => {
+  return useQuery([categoriesQueryKey, 'category', categoryId], () => model().indexEmployee(categoryId));
 };
 
 export const useGetDish = (categoryId: number, id: number) => {

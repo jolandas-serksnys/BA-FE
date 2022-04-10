@@ -1,4 +1,3 @@
-import { SectionHeader } from "@src/components/common";
 import { Layout } from "@src/components/common/Layout/Layout";
 import { useGetCategories } from "@src/hooks/category";
 import { Category } from "@src/models/category";
@@ -12,7 +11,6 @@ export const MenuPage = () => {
     <Layout>
       {data && data.map((category: Category) => (
         <Fragment key={category.id}>
-          <SectionHeader title={category.title} />
           <DishGrid category={category} />
         </Fragment>
       ))}
