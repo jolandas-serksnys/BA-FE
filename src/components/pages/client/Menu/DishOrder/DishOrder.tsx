@@ -23,7 +23,8 @@ export const DishOrder = ({ dishId, categoryId, onClose }: Props) => {
   const { tableClaim } = useTable();
   const { data } = useGetDish(categoryId, dishId);
   const [options, setOptions] = useState([] as number[]);
-  const { data: priceData } = useCalculatePrice({ dishId, options });
+  const [quantity, setQuantity] = useState(1);
+  const { data: priceData } = useCalculatePrice({ dishId, options, quantity });
   const [animation, setAnimation] = useState('initial');
   const [price, setPrice] = useState(data?.basePrice || 0);
 
@@ -62,7 +63,8 @@ export const DishOrder = ({ dishId, categoryId, onClose }: Props) => {
         tableClaimId: tableClaim.id,
         dishId,
         options,
-        comment: values.comment
+        comment: values.comment,
+        quantity
       });
       onClose();
     } catch (error) {
@@ -153,13 +155,42 @@ export const DishOrder = ({ dishId, categoryId, onClose }: Props) => {
 
                 <div className="p-4 px-5 border-top border-gray mt-2">
                   <div className="row">
-                    <div>
+                    <div className="col-12 col-lg-8">
                       <Input
                         type="text"
                         name="comment"
                         placeholder="Please serve this cold..."
                         label="Comment"
                       />
+                    </div>
+                    <div className="col-12 col-lg-4">
+                      <label className="form-label" htmlFor="quantity">Quantity</label>
+                      <div className="input-group">
+                        <button
+                          className="btn btn-dark"
+                          onClick={() => setQuantity(quantity - 1)}
+                          disabled={quantity === 1}
+                          type="button"
+                        >
+                          -
+                        </button>
+                        <input
+                          className="form-control text-center"
+                          type="number"
+                          name="quantity"
+                          placeholder="1"
+                          value={quantity}
+                          onChange={(e: any) => setQuantity(parseInt(e.target.value))}
+                          min={1}
+                        />
+                        <button
+                          className="btn btn-dark"
+                          onClick={() => setQuantity(quantity + 1)}
+                          type="button"
+                        >
+                          +
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>

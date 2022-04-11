@@ -33,6 +33,7 @@ export interface CustomerOrder extends Base {
   totalPrice: number;
   order_addons: OrderAddon[];
   owner: Customer;
+  quantity: number;
 }
 
 export interface TableOrder extends Base {

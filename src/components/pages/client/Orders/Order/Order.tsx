@@ -101,8 +101,11 @@ export const Order = ({ order }: Props) => {
           ))}
         </div>
       }
-      <h6 className="d-flex justify-content-between mt-3 mb-0">
-        Total:
+      <h6 className="d-flex justify-content-between">
+        <span>Quantity:</span> <strong>x {order.quantity}</strong>
+      </h6>
+      <h6 className="d-flex justify-content-between">
+        <span>Total:</span>
         <strong className="text-primary">{order.totalPrice} &euro;</strong>
       </h6>
       {order.owner.id !== user.id &&
