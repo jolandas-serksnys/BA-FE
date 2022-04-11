@@ -8,6 +8,6 @@ export const AdminPage = () => (
     {/* <Statistics /> */}
     <Tables />
     <Categories />
-    {/* <Employees /> */}
+    <Employees />
   </Layout>
 );

@@ -5,13 +5,15 @@ export const URL = {
   SIGN_UP: '/establishment/:establishmentId/employee/sign-up',
   UPDATE_ACCOUNT: '/employee/update-account',
   UPDATE_PASSWORD: '/employee/update-password',
+  LIST: '/establishment/:establishmentId/employee',
+  DELETE: '/establishment/:establishmentId/employee/:id',
 }
 
 export enum EmployeeRole {
   GENERAL = 'GENERAL',
   WAITER = 'WAITER',
   ADMINISTRATOR = 'ADMINISTRATOR',
-  RECEPTIONIS = 'RECEPTIONIS',
+  RECEPTIONIST = 'RECEPTIONIST',
   KITCHEN = 'KITCHEN',
   OTHER = 'OTHER'
 }

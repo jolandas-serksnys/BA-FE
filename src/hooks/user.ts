@@ -1,7 +1,7 @@
 import { useAuth } from "@src/contexts/authContext";
 import { CustomerApiResponse, URL as CustomerURL } from "@src/models/customer";
 import { Employee, URL as EmployeeURL } from "@src/models/employee";
-import { URL as UserURL } from "@src/models/user";
+import { URL as UserURL, User } from "@src/models/user";
 import api from "@src/utils/api";
 import { useMutation, useQuery } from "react-query";
 import { generatePath, useNavigate } from 'react-router-dom';

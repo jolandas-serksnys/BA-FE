@@ -104,6 +104,10 @@ body {
   border: unset;
 }
 
+.btn.btn-link {
+  text-decoration: none;
+}
+
 .card {
   box-shadow: $box-shadow-sm;
 }
