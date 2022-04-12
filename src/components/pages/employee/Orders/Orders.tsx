@@ -138,7 +138,7 @@ export const OrdersPage = () => {
                                     </small>
                                     {item.table_claim.allowSeatsBypass && item.table_claim.status === TableClaimStatus.ACTIVE &&
                                       <small className="text-warning fw-bold">
-                                        Seats limit bypassed!
+                                        Seats limit disabled!
                                       </small>
                                     }
                                   </div>
@@ -185,7 +185,7 @@ export const OrdersPage = () => {
                               isLoading={isLoadingSeats}
                               disabled={isLoadingSeats}
                             >
-                              {!item.table_claim.allowSeatsBypass ? 'Enable' : 'Disable'} seats limit bypass
+                              {item.table_claim.allowSeatsBypass ? 'Enable' : 'Disable'} seats limit
                             </Button>
                             <Button
                               outline
