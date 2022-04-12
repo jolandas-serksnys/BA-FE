@@ -63,6 +63,10 @@ body {
   color: $white;
 }
 
+.btn.btn-outline-gray:not(:hover) {
+  color: $black;
+}
+
 .btn .btn-spinner {
   position: absolute;
   top: 0;

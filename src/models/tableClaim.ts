@@ -5,6 +5,7 @@ import { Table } from './table';
 export const URL = {
   CLAIMED: '/claimed',
   TOGGLE_ACCESS_REQUESTS: '/toggle-access-requests',
+  TOGGLE_SEATS_BYPASS: '/claim/:id/toggle-seats-limit',
 }
 
 export enum TableClaimStatus {
@@ -21,4 +22,5 @@ export interface TableClaim extends Base {
   requestsEnabled: boolean;
   status: TableClaimStatus;
   requestCode: string;
+  allowSeatsBypass: boolean;
 }

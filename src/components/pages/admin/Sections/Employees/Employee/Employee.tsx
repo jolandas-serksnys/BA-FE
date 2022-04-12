@@ -5,6 +5,7 @@ import { Employee as Model } from "@src/models/employee";
 import { capitalize } from "@src/utils";
 import React, { useState } from "react";
 import { DeleteEmployeeModal } from "../DeleteEmployeeModal";
+import { EmployeeModal } from "../EmployeeModal";
 
 interface Props {
   item: Model;
@@ -31,7 +32,7 @@ export const Employee = ({ item }: Props) => {
         </Column>
       </Row>
       {showEditModal &&
-        <></>
+        <EmployeeModal id={item.id} onClose={() => setShowEditModal(false)} />
       }
       {showDeleteModal &&
         <DeleteEmployeeModal item={item} onClose={() => setShowDeleteModal(false)} />

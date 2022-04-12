@@ -8,6 +8,14 @@ export const URL = {
   DELETE: '/establishment/:id',
 }
 
+export enum EstablishmentType {
+  CAFE = 'CAFE',
+  RESTAURANT = 'RESTAURANT',
+  BAR = 'BAR',
+  CANTEEN = 'CANTEEN',
+  OTHER = 'OTHER'
+}
+
 export interface Establishment extends Base {
   title: string;
   description: string;

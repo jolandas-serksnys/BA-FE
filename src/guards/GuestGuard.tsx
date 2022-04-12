@@ -14,7 +14,7 @@ export const GuestGuard = (props: any) => {
   if (user) {
     if (user.isEmployee) {
       return (
-        <Navigate to="/e" replace />
+        <Navigate to="/e/orders" replace />
       );
     }
 

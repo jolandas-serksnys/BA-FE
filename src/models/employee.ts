@@ -6,6 +6,8 @@ export const URL = {
   UPDATE_ACCOUNT: '/employee/update-account',
   UPDATE_PASSWORD: '/employee/update-password',
   LIST: '/establishment/:establishmentId/employee',
+  GET: '/establishment/:establishmentId/employee/:id',
+  UPDATE: '/establishment/:establishmentId/employee/:id',
   DELETE: '/establishment/:establishmentId/employee/:id',
 }
 

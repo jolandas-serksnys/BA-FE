@@ -1,8 +1,10 @@
-import { Card, SectionHeader } from "@src/components/common";
+import { Button, Card, SectionHeader } from "@src/components/common";
 import { useGetEstablishement } from "@src/hooks/establishment";
-import React from "react";
+import React, { useState } from "react";
+import { EstablishmentModal } from "./EstablishmentModal";
 
 export const Establishment = () => {
+  const [showModal, setShowModal] = useState(false);
   const { data } = useGetEstablishement();
 
   return (
@@ -19,13 +21,28 @@ export const Establishment = () => {
                   <td><strong>{data.title}</strong></td>
                 </tr>
                 <tr>
-                  <td className="text-end pe-4">Describtion</td>
+                  <td className="text-end pe-4">Description</td>
                   <td><strong>{data.description}</strong></td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>
+                    <Button
+                      onClick={() => setShowModal(true)}
+                      className="mt-3"
+                      size="sm"
+                    >
+                      Change establishment details
+                    </Button>
+                  </td>
                 </tr>
               </tbody>
             </table>
           }
         />
+      }
+      {showModal &&
+        <EstablishmentModal onClose={() => setShowModal(false)} />
       }
     </>
   );

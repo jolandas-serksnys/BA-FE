@@ -2,6 +2,7 @@ import { Button, Input, SectionHeader } from "@src/components/common";
 import { Layout } from "@src/components/common/Layout";
 import { useTable } from "@src/contexts/tableContext";
 import { model, useCustomerOrders } from "@src/hooks/order";
+import { model as tableClaimModel } from "@src/hooks/tableClaim";
 import { TableClaimStatus } from "@src/models/tableClaim";
 import { Formik } from "formik";
 import React, { useEffect, useState } from "react";
@@ -16,6 +17,7 @@ export const OrdersPage = () => {
     dateTo: '',
   });
   const [isLoadingToggle, setIsLoadingToggle] = useState(false);
+  const [isLoadingSeats, setIsLoadingSeats] = useState(false);
   const { data, isLoading, mutate } = useCustomerOrders(filterProps);
   const [activeOrder, setActiveOrder] = useState(0);
   const [acticeCustomerOrder, setActiceCustomerOrder] = useState(0);
@@ -40,6 +42,13 @@ export const OrdersPage = () => {
     await model().toggleTableOrderClaim(orderId);
     mutate();
     setIsLoadingToggle(false);
+  };
+
+  const toggleSeatsBypass = async (claimId: number) => {
+    setIsLoadingSeats(true);
+    await tableClaimModel().toggleSeatsLimit(claimId);
+    mutate();
+    setIsLoadingSeats(false);
   };
 
   const handleFilter = async (values: any, { setSubmitting }: any) => {
@@ -117,7 +126,23 @@ export const OrdersPage = () => {
                             <div className="d-flex justify-content-between align-items-center gap-3">
                               <div>
                                 <strong className="d-block">{item.table_claim.table.displayName}</strong>
-                                <small>{item.table_claim.customers.length} Customer{item.table_claim.customers.length > 1 ? 's' : ''}</small>
+                                {item.table_claim.status === TableClaimStatus.CLOSED &&
+                                  <small className="text-danger fw-bold">
+                                    Claim Closed!
+                                  </small>
+                                }
+                                {item.table_claim.status === TableClaimStatus.ACTIVE &&
+                                  <div className="d-flex gap-2">
+                                    <small>
+                                      {item.table_claim.customers.length} Customer{item.table_claim.customers.length > 1 ? 's' : ''}
+                                    </small>
+                                    {item.table_claim.allowSeatsBypass && item.table_claim.status === TableClaimStatus.ACTIVE &&
+                                      <small className="text-warning fw-bold">
+                                        Seats limit bypassed!
+                                      </small>
+                                    }
+                                  </div>
+                                }
                               </div>
                               {
                                 /*
@@ -151,7 +176,17 @@ export const OrdersPage = () => {
                           <Accordion defaultActiveKey="0" activeKey={`${acticeCustomerOrder}`}>
                             {item.customer_orders.map((order, index) => <CustomerOrder key={index} index={index} order={order} setActiceCustomerOrder={setActiceCustomerOrder} />)}
                           </Accordion>
-                          <div className="d-flex gap-3 mt-3 align-items-center justify-content-between">
+                          <div className="d-flex gap-2 mt-3 align-items-center">
+                            <Button
+                              outline
+                              variant={item.table_claim.allowSeatsBypass ? 'danger' : 'gray'}
+                              size="sm"
+                              onClick={() => toggleSeatsBypass(item.table_claim.id)}
+                              isLoading={isLoadingSeats}
+                              disabled={isLoadingSeats}
+                            >
+                              {!item.table_claim.allowSeatsBypass ? 'Enable' : 'Disable'} seats limit bypass
+                            </Button>
                             <Button
                               outline
                               variant="danger"

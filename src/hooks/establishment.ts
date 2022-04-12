@@ -12,7 +12,10 @@ export const model = () => {
   return ({
     get: async (): Promise<Establishment> => {
       return await api.get(generatePath(URL.GET, { id: establishmentId })).then((response) => response?.data);
-    }
+    },
+    update: async (establishment: Establishment): Promise<Establishment> => {
+      return await api.put(generatePath(URL.UPDATE, { id: establishmentId }), establishment).then((response) => response?.data);
+    },
   });
 };
 
