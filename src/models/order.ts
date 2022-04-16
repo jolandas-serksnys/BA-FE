@@ -9,7 +9,9 @@ export const URL = {
   CANCEL: '/order/:id/cancel',
   ACTIVE: '/order/active',
   UPDATE_STATUS: '/order/:id/status',
-  TOGGLE_TABBLE_ORDER_CLAIM: '/order/table/:id/toggle'
+  TOGGLE_TABBLE_ORDER_CLAIM: '/order/table/:id/toggle',
+  USER_RECEIPT: '/order/receipt/user',
+  ORDER_RECEIPTS: '/order/receipts'
 }
 
 export interface OrderAddon extends Base {
@@ -40,4 +42,9 @@ export interface TableOrder extends Base {
   status: string;
   customer_orders: CustomerOrder[];
   table_claim?: TableClaim;
+}
+
+export interface CustomerReceipt {
+  orders: CustomerOrder[];
+  totalPrice: number;
 }

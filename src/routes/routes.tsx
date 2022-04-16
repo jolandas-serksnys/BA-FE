@@ -7,12 +7,14 @@ import { AdminPage } from '@src/components/pages/admin';
 import { EmployeePage } from '@src/components/pages/employee/Employee';
 import { DishesPage } from "@src/components/pages/admin/Category";
 import { OrdersPage as EmployeeOrdersPage } from "@src/components/pages/employee/Orders";
+import { BillPage } from "@src/components/pages/client/Bill";
 
 export const Routes = () => (
   <RoutesMain>
     <Route path='/' element={<GuestGuard><ClaimTablePage /></GuestGuard>} />
     <Route path='/menu' element={<UserGuard><MenuPage /></UserGuard>} />
     <Route path='/orders' element={<UserGuard><CustomerOrdersPage /></UserGuard>} />
+    <Route path='/bill' element={<UserGuard><BillPage /></UserGuard>} />
 
     <Route path='/e' element={<EmployeeGuard><EmployeePage /></EmployeeGuard>} />
     <Route path='/e/sign-in' element={<GuestGuard><SignInPage /></GuestGuard>} />

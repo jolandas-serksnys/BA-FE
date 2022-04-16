@@ -20,7 +20,7 @@ export const CustomerNav = () => {
         }
         onClick={() => { setUpdates() }}
       />
-      {/* <BottomNavItem to="/bill" icon={<IconReceipt />} title="Bill" /> */}
+      <BottomNavItem to="/bill" icon={<IconReceipt />} title="Bill" />
     </>
   );
 };

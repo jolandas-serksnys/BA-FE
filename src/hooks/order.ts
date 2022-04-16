@@ -1,10 +1,12 @@
-import { CustomerOrderStatus, TableOrder, URL } from "@src/models/order";
+import { CustomerOrderStatus, CustomerReceipt, TableOrder, URL } from "@src/models/order";
 import api from "@src/utils/api";
 import { useMutation, useQuery } from "react-query";
 import { generatePath } from "react-router-dom";
 
 export const orderClaimQueryKey = 'order';
 export const activeOrdersQueryKey = 'orders';
+export const customerReceptQueryTable = 'customer-receipt';
+export const orderReceptsQueryTable = 'order-receipts';
 
 export const model = () => ({
   calculatePrice: async (data: any) => {
@@ -27,6 +29,12 @@ export const model = () => ({
   },
   toggleTableOrderClaim: async (id: number) => {
     return api.post(generatePath(URL.TOGGLE_TABBLE_ORDER_CLAIM, { id: `${id}` })).then((response) => response?.data);
+  },
+  getUserReceipt: async () => {
+    return api.get<CustomerReceipt>(URL.USER_RECEIPT).then((response) => response?.data);
+  },
+  getOrderReceipts: async () => {
+    return api.get<CustomerReceipt>(URL.ORDER_RECEIPTS).then((response) => response?.data);
   },
 });
 
@@ -55,4 +63,12 @@ export const useCustomerOrders = ({ query, dateFrom, dateTo }: CustomerOrderFilt
     mutationKey: activeOrdersQueryKey,
   });
 };
+
+export const useCustomerReceipt = () => {
+  return useQuery(customerReceptQueryTable, () => model().getUserReceipt());
+}
+
+export const useOrderRecepts = () => {
+  return useQuery(orderReceptsQueryTable, () => model().getOrderReceipts());
+}
 

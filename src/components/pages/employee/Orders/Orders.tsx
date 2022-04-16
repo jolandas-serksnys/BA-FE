@@ -179,7 +179,7 @@ export const OrdersPage = () => {
                           <div className="d-flex gap-2 mt-3 align-items-center">
                             <Button
                               outline
-                              variant={item.table_claim.allowSeatsBypass ? 'danger' : 'gray'}
+                              variant="danger"
                               size="sm"
                               onClick={() => toggleSeatsBypass(item.table_claim.id)}
                               isLoading={isLoadingSeats}
