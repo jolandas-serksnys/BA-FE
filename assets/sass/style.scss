@@ -51,6 +51,14 @@ body {
   background: $gray-100;
 }
 
+.accordion-button {
+  box-shadow: none !important;
+
+  &.collapsed:hover {
+    background-color: $gray-200;
+  }
+}
+
 .btn {
   position: relative;
   font-weight: 600;

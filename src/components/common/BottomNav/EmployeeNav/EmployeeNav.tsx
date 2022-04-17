@@ -1,4 +1,4 @@
-import { IconFactCheck, IconWidgets } from "@src/components/icons";
+import { IconAlert, IconFactCheck, IconWidgets } from "@src/components/icons";
 import { useAuth } from "@src/contexts/authContext";
 import { useTable } from "@src/contexts/tableContext";
 import { Employee, EmployeeRole } from "@src/models/employee";
@@ -21,6 +21,11 @@ export const EmployeeNav = () => {
           </>
         }
         onClick={() => { setUpdates() }}
+      />
+      <BottomNavItem
+        to="/e/requests"
+        icon={<IconAlert />}
+        title="Requests"
       />
       {(user as Employee).role === EmployeeRole.ADMINISTRATOR &&
         <>

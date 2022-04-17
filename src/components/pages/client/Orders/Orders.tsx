@@ -1,19 +1,22 @@
+import { Order } from "./Order";
 import { Button, Card } from "@src/components/common";
+import { AssistanceModal } from "@src/components/common/AssistanceModal";
 import { Layout } from "@src/components/common/Layout";
 import { useAuth } from "@src/contexts/authContext";
 import { useTable } from "@src/contexts/tableContext";
 import { useGetTableOrder } from "@src/hooks/order";
-import { model as claimModel, tableClaimQueryKey } from "@src/hooks/tableClaim";
+import { model, tableClaimQueryKey } from "@src/hooks/tableClaim";
 import { Customer } from "@src/models/customer";
 import { TableClaimStatus } from "@src/models/tableClaim";
 import { queryClient } from "@src/utils";
 import clsx from "clsx";
-import React from "react";
-import { OverlayTrigger, Tooltip } from "react-bootstrap";
+import React, { useState } from "react";
+import { Dropdown, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { Order } from "./Order";
 
 export const OrdersPage = () => {
+  const [showAssistanceModal, setShowAssistanceModal] = useState(false);
+
   const { user } = useAuth();
   const { tableClaim } = useTable();
   const { data, isLoading } = useGetTableOrder(tableClaim.id);
@@ -23,7 +26,7 @@ export const OrdersPage = () => {
   }
 
   const toggleAccessRequests = async () => {
-    await claimModel().toggleAccessRequests();
+    await model().toggleAccessRequests();
     queryClient.invalidateQueries(tableClaimQueryKey);
   };
 
@@ -37,7 +40,7 @@ export const OrdersPage = () => {
         }
         <Card
           body={
-            <div className="d-flex justify-content-between gap-3 align-items-center px-2">
+            <div className="d-flex justify-content-between gap-3 align-items-center px-2 flex-column flex-md-row">
               <div className="avatar-group">
                 {tableClaim && [user, ...tableClaim.customers.filter((customer: Customer) => customer.id !== user.id)].map((customer: Customer) => (
                   <OverlayTrigger
@@ -62,9 +65,24 @@ export const OrdersPage = () => {
                   </div>
                 }
                 <div>
-                  <Button size="sm" onClick={toggleAccessRequests} variant={tableClaim.requestsEnabled ? "danger" : "primary"} outline>
+                  <Button size="sm" onClick={toggleAccessRequests} variant={tableClaim.requestsEnabled ? "danger" : "primary"} outline className="text-nowrap">
                     {tableClaim.requestsEnabled ? 'Disable' : 'Enable'} Access Requests
                   </Button>
+                </div>
+                <div>
+                  <Dropdown align="end">
+                    <Dropdown.Toggle id="dropdown-basic" variant="outline-primary" size="sm" disabled={isLoading}>
+                      Request assistance
+                    </Dropdown.Toggle>
+                    <Dropdown.Menu>
+                      <Dropdown.Item>I want to pay up</Dropdown.Item>
+                      <Dropdown.Item
+                        onClick={() => setShowAssistanceModal(true)}
+                      >
+                        I need other assistance
+                      </Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
                 </div>
               </div>
             </div>
@@ -94,6 +112,9 @@ export const OrdersPage = () => {
           </div>
         </div>
       </div>
+      {showAssistanceModal &&
+        <AssistanceModal onClose={() => setShowAssistanceModal(false)} />
+      }
     </Layout>
   );
 };

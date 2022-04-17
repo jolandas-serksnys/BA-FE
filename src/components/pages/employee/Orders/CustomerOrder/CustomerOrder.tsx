@@ -18,7 +18,10 @@ export const CustomerOrder = ({ order: data, index, setActiceCustomerOrder }: Pr
   const formatDate = (date: string) => {
     const dateObj = new Date(date);
 
-    return `${dateObj.getHours()}:${dateObj.getMinutes()}`;
+    const hours = `${dateObj.getHours()}`.padStart(2, '0');
+    const minutes = `${dateObj.getMinutes()}`.padStart(2, '0');
+
+    return `${hours}:${minutes}`;
   };
 
   const updateStatus = async (status: CustomerOrderStatus) => {
@@ -47,7 +50,7 @@ export const CustomerOrder = ({ order: data, index, setActiceCustomerOrder }: Pr
   }
 
   return (
-    <Accordion.Item eventKey={`${index}`} key={index}>
+    <Accordion.Item eventKey={`${index}`} key={index} className="border-0">
       <Accordion.Header onClick={() => setActiceCustomerOrder(index)}>
         <div className="d-flex justify-content-between w-100 pe-3">
           <div className="d-flex gap-3 align-items-center">

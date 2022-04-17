@@ -1,4 +1,4 @@
-import { Button, Input, SectionHeader } from "@src/components/common";
+import { Button, Card, Input, SectionHeader } from "@src/components/common";
 import { Layout } from "@src/components/common/Layout";
 import { useTable } from "@src/contexts/tableContext";
 import { model, useCustomerOrders } from "@src/hooks/order";
@@ -6,16 +6,22 @@ import { model as tableClaimModel } from "@src/hooks/tableClaim";
 import { TableClaimStatus } from "@src/models/tableClaim";
 import { Formik } from "formik";
 import React, { useEffect, useState } from "react";
-import { Accordion, Col, Form, Nav, Row, Tab } from "react-bootstrap";
+import { Accordion, Alert, Col, Form, Nav, Row, Tab } from "react-bootstrap";
 import { CustomerOrder } from "./CustomerOrder";
+import { CustomerOrderNavButton } from "./CustomerOrderNavButton";
 
 export const OrdersPage = () => {
-  const { tableUpdates, setUpdates } = useTable();
-  const [filterProps, setFilterProps] = useState({
+  const tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1)
+
+  const initialValues = {
     query: '',
-    dateFrom: '',
-    dateTo: '',
-  });
+    dateFrom: new Date().toISOString().split('T')[0],
+    dateTo: tomorrow.toISOString().split('T')[0],
+  };
+
+  const { tableUpdates, setUpdates } = useTable();
+  const [filterProps, setFilterProps] = useState(initialValues);
   const [isLoadingToggle, setIsLoadingToggle] = useState(false);
   const [isLoadingSeats, setIsLoadingSeats] = useState(false);
   const { data, isLoading, mutate } = useCustomerOrders(filterProps);
@@ -59,163 +65,150 @@ export const OrdersPage = () => {
   };
 
   const handleFilterReset = async () => {
-    setFilterProps({
-      query: '',
-      dateFrom: '',
-      dateTo: '',
-    });
+    setFilterProps(initialValues);
   };
 
   return (
     <Layout>
       <div className="d-flex flex-column">
         <SectionHeader title="Active table orders" />
-        <div className="card">
-          <div className="card-body">
-            <Formik
-              initialValues={filterProps}
-              onSubmit={handleFilter}
-            >
-              {({ handleSubmit, resetForm }) => (
-                <Form onSubmit={handleSubmit} className="mb-3">
-                  <div className="d-flex gap-3 flex-column flex-lg-row">
-                    <Input
-                      type="search"
-                      placeholder="Search..."
-                      name="query"
-                      id="query"
-                    />
-                    <Input
-                      type="date"
-                      placeholder="Date from"
-                      name="dateFrom"
-                      id="dateFrom"
-                    />
-                    <Input
-                      type="date"
-                      placeholder="Date to"
-                      name="dateTo"
-                      id="dateTo"
-                    />
-                    <div className="d-flex gap-3">
-                      <Button type="submit" className="text-nowrap">
-                        Filter
-                      </Button>
-                      <Button type="button" className="text-nowrap" onClick={() => {
-                        handleFilterReset();
-                        resetForm();
-                      }}>
-                        Clear
-                      </Button>
+        <div>
+          <Formik
+            initialValues={filterProps}
+            onSubmit={handleFilter}
+          >
+            {({ handleSubmit, resetForm }) => (
+              <Form onSubmit={handleSubmit} className="mb-3">
+                <Card
+                  body={
+                    <div className="d-flex gap-3 flex-column flex-lg-row">
+                      <Input
+                        type="search"
+                        placeholder="Search..."
+                        name="query"
+                        id="query"
+                      />
+                      <Input
+                        type="date"
+                        placeholder="Date from"
+                        name="dateFrom"
+                        id="dateFrom"
+                      />
+                      <Input
+                        type="date"
+                        placeholder="Date to"
+                        name="dateTo"
+                        id="dateTo"
+                      />
+                      <div className="d-flex gap-3">
+                        <Button type="submit" className="text-nowrap">
+                          Filter
+                        </Button>
+                        <Button type="button" className="text-nowrap" onClick={() => {
+                          handleFilterReset();
+                          resetForm();
+                        }}>
+                          Clear
+                        </Button>
+                      </div>
                     </div>
-                  </div>
-                </Form>
-              )}
-            </Formik>
-            {data && data.length !== 0 &&
-              <Tab.Container defaultActiveKey={activeOrder}>
-                <Row>
-                  <Col lg={4}>
-                    <Nav variant="pills" className="flex-column mb-3 gap-1">
-                      {data && data.map((item, index) => (
-                        <Nav.Item key={item.id}>
-                          <Nav.Link eventKey={index} onClick={() => {
-                            setActiveOrder(index);
-                            setActiceCustomerOrder(0);
-                          }}>
-                            <div className="d-flex justify-content-between align-items-center gap-3">
-                              <div>
-                                <strong className="d-block">{item.table_claim.table.displayName}</strong>
-                                {item.table_claim.status === TableClaimStatus.CLOSED &&
-                                  <small className="text-danger fw-bold">
-                                    Claim Closed!
-                                  </small>
-                                }
-                                {item.table_claim.status === TableClaimStatus.ACTIVE &&
-                                  <div className="d-flex gap-2">
-                                    <small>
-                                      {item.table_claim.customers.length} Customer{item.table_claim.customers.length > 1 ? 's' : ''}
-                                    </small>
-                                    {item.table_claim.allowSeatsBypass && item.table_claim.status === TableClaimStatus.ACTIVE &&
-                                      <small className="text-warning fw-bold">
-                                        Seats limit disabled!
-                                      </small>
-                                    }
-                                  </div>
-                                }
-                              </div>
-                              {
-                                /*
-                              <strong className="text-warning">
-                                <IconAlert />
-                              </strong>
-                                */
-                              }
-                            </div>
-                          </Nav.Link>
-                        </Nav.Item>
-                      ))}
-                    </Nav>
-                  </Col>
-                  <Col lg={8}>
-                    <Tab.Content>
-                      {data && data.map((item, index) => (
-                        <Tab.Pane key={item.id} eventKey={index}>
-                          {
-                            /*
+                  }
+                />
+              </Form>
+            )}
+          </Formik>
+          {data && data.length !== 0 &&
+            <Tab.Container defaultActiveKey={activeOrder}>
+              <Row>
+                <Col lg={4}>
+                  <Nav variant="pills" className="card flex-column mb-3 gap-1 p-3">
+                    {data && data.map((item, index) => (
+                      <CustomerOrderNavButton
+                        key={item.id}
+                        index={index}
+                        item={item}
+                        setActiveOrder={setActiveOrder}
+                        setActiceCustomerOrder={setActiceCustomerOrder}
+                      />
+                    ))}
+                  </Nav>
+                </Col>
+                <Col lg={8}>
+                  <Tab.Content>
+                    {data && data.map((item, index) => (
+                      <Tab.Pane key={item.id} eventKey={index}>
+                        {item.table_claim.assistanceRequests
+                          && item.table_claim.assistanceRequests.length > 0 &&
                           <Alert variant="warning" className="p-4 py-3">
                             <Alert.Heading>
-                              <strong>Assistance request</strong>
+                              <strong>Assistance requests</strong>
                             </Alert.Heading>
-                            <div>
-                              Table &quot;<strong>{item.table_claim.table.displayName}</strong>&quot; has requested assistance from an employee.
-                            </div>
+                            <ul className="m-0">
+                              {item.table_claim.assistanceRequests.map((request) => (
+                                <li key={request.id}>
+                                  <div className="d-flex justify-content-between">
+                                    <span>{request.message}</span>
+                                    <button className="btn btn-link p-0">Dismiss</button>
+                                  </div>
+                                </li>
+                              ))}
+                            </ul>
                           </Alert>
-                            */
+                        }
+                        <Accordion defaultActiveKey="0" activeKey={`${acticeCustomerOrder}`} className="shadow-sm rounded">
+                          {item.customer_orders.map((order, index) =>
+                            <CustomerOrder
+                              key={index}
+                              index={index}
+                              order={order}
+                              setActiceCustomerOrder={setActiceCustomerOrder}
+                            />
+                          )}
+                        </Accordion>
+                        <Card
+                          className="mt-3"
+                          body={
+                            <div className="d-flex gap-2 align-items-center">
+                              <Button
+                                outline
+                                variant="danger"
+                                size="sm"
+                                onClick={() => toggleSeatsBypass(item.table_claim.id)}
+                                isLoading={isLoadingSeats}
+                                disabled={isLoadingSeats}
+                              >
+                                {item.table_claim.allowSeatsBypass ? 'Enable' : 'Disable'} seats limit
+                              </Button>
+                              <Button
+                                outline
+                                variant="danger"
+                                size="sm"
+                                onClick={() => toggleTableOrderClaim(item.id)}
+                                isLoading={isLoadingToggle}
+                                disabled={isLoadingToggle}
+                              >
+                                {item.table_claim.status === TableClaimStatus.ACTIVE ? 'Close' : 'Reopen'} this table order
+                              </Button>
+                            </div>
                           }
-                          <Accordion defaultActiveKey="0" activeKey={`${acticeCustomerOrder}`}>
-                            {item.customer_orders.map((order, index) => <CustomerOrder key={index} index={index} order={order} setActiceCustomerOrder={setActiceCustomerOrder} />)}
-                          </Accordion>
-                          <div className="d-flex gap-2 mt-3 align-items-center">
-                            <Button
-                              outline
-                              variant="danger"
-                              size="sm"
-                              onClick={() => toggleSeatsBypass(item.table_claim.id)}
-                              isLoading={isLoadingSeats}
-                              disabled={isLoadingSeats}
-                            >
-                              {item.table_claim.allowSeatsBypass ? 'Enable' : 'Disable'} seats limit
-                            </Button>
-                            <Button
-                              outline
-                              variant="danger"
-                              size="sm"
-                              onClick={() => toggleTableOrderClaim(item.id)}
-                              isLoading={isLoadingToggle}
-                              disabled={isLoadingToggle}
-                            >
-                              {item.table_claim.status === TableClaimStatus.ACTIVE ? 'Close' : 'Reopen'} this table order
-                            </Button>
-                          </div>
-                        </Tab.Pane>
-                      ))}
-                    </Tab.Content>
-                  </Col>
-                </Row>
-              </Tab.Container>
-            }
-            {(!data || data.length === 0) && !isLoading &&
-              <div className="rounded border p-5 text-center">
-                <h5 className="mb-0">No orders found</h5>
-              </div>
-            }
-            {isLoading &&
-              <div className="rounded border p-5 text-center">
-                <h5 className="mb-0">Loading data...</h5>
-              </div>
-            }
-          </div>
+                        />
+                      </Tab.Pane>
+                    ))}
+                  </Tab.Content>
+                </Col>
+              </Row>
+            </Tab.Container>
+          }
+          {(!data || data.length === 0) && !isLoading &&
+            <div className="rounded border p-5 text-center">
+              <h5 className="mb-0">No orders found</h5>
+            </div>
+          }
+          {isLoading &&
+            <div className="rounded border p-5 text-center">
+              <h5 className="mb-0">Loading data...</h5>
+            </div>
+          }
         </div>
       </div>
     </Layout >

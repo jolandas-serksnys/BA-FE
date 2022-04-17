@@ -195,7 +195,12 @@ export const DishOrder = ({ dishId, categoryId, onClose }: Props) => {
                   </div>
                 </div>
 
-                <div className="pb-2 sticky-bottom">
+                <div
+                  className="pb-2 sticky-bottom"
+                  style={{
+                    zIndex: 2,
+                  }}
+                >
                   <div className="d-flex gap-2 flex-equal-2 p-2 mx-3 rounded shadow-sm bg-white">
                     <Button variant="gray" onClick={onClose}>
                       Close
