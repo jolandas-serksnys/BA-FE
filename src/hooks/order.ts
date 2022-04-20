@@ -5,8 +5,9 @@ import { generatePath } from "react-router-dom";
 
 export const orderClaimQueryKey = 'order';
 export const activeOrdersQueryKey = 'orders';
-export const customerReceptQueryTable = 'customer-receipt';
-export const orderReceptsQueryTable = 'order-receipts';
+export const customerReceptQueryKey = 'customer-receipt';
+export const orderReceptsQueryKey = 'order-receipts';
+export const orderReceptsTotalQueryKey = 'order-total';
 
 export const model = () => ({
   calculatePrice: async (data: any) => {
@@ -35,6 +36,9 @@ export const model = () => ({
   },
   getOrderReceipts: async () => {
     return api.get<CustomerReceipt>(URL.ORDER_RECEIPTS).then((response) => response?.data);
+  },
+  getOrderReceiptTotal: async () => {
+    return api.get<{ total: number }>(URL.ORDER_TOTAL).then((response) => response?.data);
   },
 });
 
@@ -65,10 +69,14 @@ export const useCustomerOrders = ({ query, dateFrom, dateTo }: CustomerOrderFilt
 };
 
 export const useCustomerReceipt = () => {
-  return useQuery(customerReceptQueryTable, () => model().getUserReceipt());
+  return useQuery(customerReceptQueryKey, () => model().getUserReceipt());
 }
 
 export const useOrderRecepts = () => {
-  return useQuery(orderReceptsQueryTable, () => model().getOrderReceipts());
+  return useQuery(orderReceptsQueryKey, () => model().getOrderReceipts());
+}
+
+export const useOrderReceptTotal = () => {
+  return useQuery(orderReceptsTotalQueryKey, () => model().getOrderReceiptTotal());
 }
 

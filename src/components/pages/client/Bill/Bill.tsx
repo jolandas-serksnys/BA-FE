@@ -1,16 +1,14 @@
 import { SectionHeader } from "@src/components/common";
 import { Layout } from "@src/components/common/Layout";
-import { useCustomerReceipt, useOrderRecepts } from "@src/hooks/order";
-import React, { useEffect } from "react";
+import { useCustomerReceipt, useOrderRecepts, useOrderReceptTotal } from "@src/hooks/order";
+import { formatPrice } from "@src/utils";
+import React from "react";
 import { BillTable } from "./BillTable";
 
 export const BillPage = () => {
   const { data: customerReceipt } = useCustomerReceipt();
   const { data: orderReceipts } = useOrderRecepts();
-
-  useEffect(() => {
-    console.log(customerReceipt);
-  }, [customerReceipt]);
+  const { data: orderReceiptTotal } = useOrderReceptTotal();
 
   return (
     <Layout>
@@ -20,14 +18,19 @@ export const BillPage = () => {
           <BillTable data={customerReceipt} />
         </div>
       }
-      <SectionHeader title="Your colleagues's orders" />
-      {orderReceipts &&
-        <div className="card">
-          <BillTable data={orderReceipts} showOwner={true} />
-        </div>
+      {orderReceipts && orderReceipts.orders.length > 0 &&
+        <>
+          <SectionHeader title="Your colleagues's orders" />
+          <div className="card">
+            <BillTable data={orderReceipts} showOwner={true} />
+          </div>
+        </>
       }
-      <SectionHeader title="Total" />
-      Hi
+      <h2 className="d-flex justify-content-between mt-4 px-2 section-heading">
+        <span>Total</span>
+        {orderReceiptTotal && <span className="text-primary">{formatPrice(orderReceiptTotal.total)}</span>}
+      </h2>
+
     </Layout>
   )
 };

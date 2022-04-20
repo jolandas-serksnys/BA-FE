@@ -21,6 +21,7 @@ export interface Option extends Base {
 export interface Addon extends Base {
   title: string;
   isOptional: boolean;
+  isMultiple: boolean;
   options?: Option[];
 }
 

@@ -24,6 +24,11 @@ export const AssistanceRequestsPage = () => {
             {data.map((request) => (
               <AssistanceRequest key={request.id} data={request} />
             ))}
+            {(!data || data.length === 0) && !isLoading &&
+              <div className="rounded border p-5 text-center">
+                <h5 className="mb-0">No assistance requests found</h5>
+              </div>
+            }
           </div>
         }
       </Layout>

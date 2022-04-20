@@ -3,6 +3,7 @@ import { IconShoppingBasket } from "@src/components/icons";
 import { useTable } from "@src/contexts/tableContext";
 import { useGetDish } from "@src/hooks/dish";
 import { model, useCalculatePrice } from "@src/hooks/order";
+import { usePriceAnimation } from "@src/hooks/usePriceAnimation";
 import { Option } from "@src/models/dish";
 import { TableClaimStatus } from "@src/models/tableClaim";
 import { formatPrice } from "@src/utils/formatPrice";
@@ -19,28 +20,20 @@ interface Props {
 }
 
 export const DishOrder = ({ dishId, categoryId, onClose }: Props) => {
-  const [isLoading, setIsLoading] = useState(false);
-  const { tableClaim } = useTable();
-  const { data } = useGetDish(categoryId, dishId);
   const [options, setOptions] = useState([] as number[]);
   const [quantity, setQuantity] = useState(1);
+  const { tableClaim } = useTable();
+  const { data } = useGetDish(categoryId, dishId);
   const { data: priceData } = useCalculatePrice({ dishId, options, quantity });
-  const [animation, setAnimation] = useState('initial');
   const [price, setPrice] = useState(data?.basePrice || 0);
-
-  const handlePrice = (newPrice: string) => {
-    setTimeout(() => setAnimation('goUp'), 0);
-    setTimeout(() => setPrice(parseFloat(newPrice)), 100);
-    setTimeout(() => setAnimation('waitDown'), 100);
-    setTimeout(() => setAnimation('initial'), 200);
-  }
+  const { changeValue, animation } = usePriceAnimation();
 
   useEffect(() => {
     data?.basePrice && setPrice(data.basePrice);
   }, [data]);
 
   useEffect(() => {
-    priceData && handlePrice(priceData)
+    priceData && changeValue(priceData, setPrice)
   }, [priceData]);
 
   const updateOrder = (option: Option, toAdd: boolean) => {
@@ -52,12 +45,11 @@ export const DishOrder = ({ dishId, categoryId, onClose }: Props) => {
     currentOrder = currentOrder.sort((a, b) => a > b ? 1 : -1);
     setOptions(currentOrder);
     if (currentOrder.length === 0) {
-      handlePrice(String(data.basePrice))
+      changeValue(`${data.basePrice}`, setPrice)
     }
   }
 
   const handleSubmit = async (values: any, helpers: any) => {
-    setIsLoading(true);
     try {
       await model().sendOrder({
         tableClaimId: tableClaim.id,
@@ -70,7 +62,6 @@ export const DishOrder = ({ dishId, categoryId, onClose }: Props) => {
     } catch (error) {
       console.log(error);
     }
-    setIsLoading(false);
   };
 
   return (
@@ -115,7 +106,7 @@ export const DishOrder = ({ dishId, categoryId, onClose }: Props) => {
               comment: ''
             }}
           >
-            {({ values }) => (
+            {({ values, isSubmitting }) => (
               <Form>
                 {data.addons && data.addons.length > 0 &&
                   <div className="p-4 px-5 border-top border-gray mt-2">
@@ -205,7 +196,7 @@ export const DishOrder = ({ dishId, categoryId, onClose }: Props) => {
                     <Button variant="gray" onClick={onClose}>
                       Close
                     </Button>
-                    <Button type="submit" isLoading={isLoading} disabled={tableClaim.status === TableClaimStatus.CLOSED}>
+                    <Button type="submit" isLoading={isSubmitting} disabled={isSubmitting || tableClaim.status === TableClaimStatus.CLOSED}>
                       <div className="d-inline-flex gap-2 align-items-center">
                         <div className="d-inline"><IconShoppingBasket /></div>
                         <span>

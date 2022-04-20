@@ -2,6 +2,7 @@ import React from "react";
 import { CustomerReceipt } from "@src/models/order";
 import { BillTableRow } from "./BillTableRow";
 import { Row } from "./BillTable.style";
+import { formatPrice } from "@src/utils";
 
 interface OrdersListProps {
   data: CustomerReceipt;
@@ -53,7 +54,7 @@ export const BillTable = ({ data, showOwner }: OrdersListProps) => {
                 margin: "1rem 0",
               }}
             >
-              <strong className="text-primary">{data.totalPrice} &euro;</strong>
+              <strong className="text-primary">{formatPrice(data.totalPrice)}</strong>
             </div>
           </td>
         </Row>

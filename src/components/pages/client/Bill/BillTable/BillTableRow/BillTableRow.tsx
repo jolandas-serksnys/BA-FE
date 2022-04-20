@@ -1,6 +1,7 @@
 import React from "react";
 import { CustomerOrder } from "@src/models/order";
 import { Row } from "../BillTable.style";
+import { formatPrice } from "@src/utils";
 
 interface OrdersListItemProps {
   data: CustomerOrder;
@@ -18,7 +19,7 @@ export const BillTableRow = ({ data, showOwner }: OrdersListItemProps) => {
           textAlign: "right",
         }}
       >
-        {data.totalPrice} &euro;
+        {formatPrice(data.totalPrice)}
       </td>
     </Row>
   );

@@ -1,4 +1,4 @@
-import { activeOrdersQueryKey, orderClaimQueryKey } from "@src/hooks/order";
+import { activeOrdersQueryKey, customerReceptQueryKey, orderClaimQueryKey, orderReceptsQueryKey, orderReceptsTotalQueryKey } from "@src/hooks/order";
 import { tableClaimQueryKey } from "@src/hooks/tableClaim";
 import { queryClient } from "@src/utils";
 import React, { createContext, useContext, ReactNode, useEffect, useState } from "react";
@@ -52,6 +52,9 @@ export const SocketProvider = ({ children }: Props) => {
       newSocket.on('status', (data: any) => {
         setUpdates(true);
         queryClient.invalidateQueries(orderClaimQueryKey);
+        queryClient.invalidateQueries(customerReceptQueryKey);
+        queryClient.invalidateQueries(orderReceptsQueryKey);
+        queryClient.invalidateQueries(orderReceptsTotalQueryKey);
       });
 
       newSocket.on('joined', (data: any) => {

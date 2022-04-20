@@ -11,7 +11,8 @@ export const URL = {
   UPDATE_STATUS: '/order/:id/status',
   TOGGLE_TABBLE_ORDER_CLAIM: '/order/table/:id/toggle',
   USER_RECEIPT: '/order/receipt/user',
-  ORDER_RECEIPTS: '/order/receipts'
+  ORDER_RECEIPTS: '/order/receipts',
+  ORDER_TOTAL: '/order/receipt/total'
 }
 
 export interface OrderAddon extends Base {
