@@ -8,7 +8,7 @@ import { Option } from "@src/models/dish";
 import { TableClaimStatus } from "@src/models/tableClaim";
 import { formatPrice } from "@src/utils/formatPrice";
 import clsx from "clsx";
-import { Field, Form, Formik } from "formik";
+import { Field, FieldArray, Form, Formik } from "formik";
 import React, { useEffect, useState } from "react"
 import { Badge, Modal } from "react-bootstrap"
 import { DishImage } from "../Dish/Dish.style";
@@ -20,11 +20,10 @@ interface Props {
 }
 
 export const DishOrder = ({ dishId, categoryId, onClose }: Props) => {
-  const [options, setOptions] = useState([] as number[]);
   const [quantity, setQuantity] = useState(1);
   const { tableClaim } = useTable();
   const { data } = useGetDish(categoryId, dishId);
-  const { data: priceData } = useCalculatePrice({ dishId, options, quantity });
+  //const { data: priceData } = useCalculatePrice({ dishId, options, quantity });
   const [price, setPrice] = useState(data?.basePrice || 0);
   const { changeValue, animation } = usePriceAnimation();
 
@@ -32,29 +31,12 @@ export const DishOrder = ({ dishId, categoryId, onClose }: Props) => {
     data?.basePrice && setPrice(data.basePrice);
   }, [data]);
 
-  useEffect(() => {
-    priceData && changeValue(priceData, setPrice)
-  }, [priceData]);
-
-  const updateOrder = (option: Option, toAdd: boolean) => {
-    let currentOrder = options.filter((opt) => opt !== option.id);
-    if (toAdd) {
-      currentOrder.push(option.id);
-    }
-
-    currentOrder = currentOrder.sort((a, b) => a > b ? 1 : -1);
-    setOptions(currentOrder);
-    if (currentOrder.length === 0) {
-      changeValue(`${data.basePrice}`, setPrice)
-    }
-  }
-
   const handleSubmit = async (values: any, helpers: any) => {
     try {
       await model().sendOrder({
         tableClaimId: tableClaim.id,
         dishId,
-        options,
+        options: values.options,
         comment: values.comment,
         quantity
       });
@@ -102,7 +84,7 @@ export const DishOrder = ({ dishId, categoryId, onClose }: Props) => {
           <Formik
             onSubmit={handleSubmit}
             initialValues={{
-              addon: [],
+              options: [],
               comment: ''
             }}
           >
@@ -115,29 +97,53 @@ export const DishOrder = ({ dishId, categoryId, onClose }: Props) => {
                       {data.addons.map((addon, addonIndex) =>
                         <div key={addon.id} className="col-12 col-lg-6 mb-2">
                           <h6 className="section-heading">{addon.title}</h6>
-                          <div>
-                            {addon.options && addon.options.map((option, optionIndex) =>
-                              <div className="py-1" key={option.id}>
-                                <div className="form-check d-flex gap-3 align-items-center m-0 p-0">
-                                  <Field
-                                    type="checkbox"
-                                    id={`addon[${addonIndex}].option[${optionIndex}]`}
-                                    name={`addon[${addonIndex}].option[${optionIndex}]`}
-                                    value={`${option.id}`}
-                                    className="form-check-input p-2 m-0"
-                                    onChange={(checkValue: any) => {
-                                      updateOrder(option, checkValue.target.checked);
-                                    }}
-                                    checked={values[`addon[${addonIndex}].option[${optionIndex}]`]}
-                                  />
-                                  <label className="form-check-label d-flex justify-content-between align-items-center w-100" htmlFor={`addon[${addonIndex}].option[${optionIndex}]`}>
-                                    <span>{option.title}</span>
-                                    <span>{formatPrice(option.price)}</span>
-                                  </label>
-                                </div>
+                          <FieldArray
+                            name={`options[${addonIndex}]`}
+                            render={(arrayHelpers: any) => (
+                              <div>
+                                {!addon.isMultiple && !addon.isOptional &&
+                                  <div className="py-1">
+                                    <div className="form-check d-flex gap-3 align-items-center m-0 p-0">
+                                      <Field
+                                        type={addon.isMultiple ? 'checkbox' : 'radio'}
+                                        id={`options[${addonIndex}][${addon.options.length}]`}
+                                        name={`options[${addonIndex}]`}
+                                        checked={!values.options[addonIndex]}
+                                        className="form-check-input p-2 m-0"
+                                      />
+                                      <label
+                                        className="form-check-label d-flex justify-content-between align-items-center w-100"
+                                        htmlFor={`options[${addonIndex}][${addon.options.length}]`}
+                                      >
+                                        <span>Not selected</span>
+                                        <span>Free</span>
+                                      </label>
+                                    </div>
+                                  </div>
+                                }
+                                {addon.options && addon.options.map((option, optionIndex) =>
+                                  <div className="py-1" key={option.id}>
+                                    <div className="form-check d-flex gap-3 align-items-center m-0 p-0">
+                                      <Field
+                                        type={addon.isMultiple ? 'checkbox' : 'radio'}
+                                        id={`options[${addonIndex}][${optionIndex}]`}
+                                        name={addon.isMultiple ? `options[${addonIndex}][${optionIndex}]` : `options[${addonIndex}]`}
+                                        value={`${option.id}`}
+                                        className="form-check-input p-2 m-0"
+                                      />
+                                      <label
+                                        className="form-check-label d-flex justify-content-between align-items-center w-100"
+                                        htmlFor={`options[${addonIndex}][${optionIndex}]`}
+                                      >
+                                        <span>{option.title}</span>
+                                        <span>{formatPrice(option.price)}</span>
+                                      </label>
+                                    </div>
+                                  </div>
+                                )}
                               </div>
                             )}
-                          </div>
+                          />
                         </div>
                       )}
                     </div>
@@ -201,7 +207,7 @@ export const DishOrder = ({ dishId, categoryId, onClose }: Props) => {
                         <div className="d-inline"><IconShoppingBasket /></div>
                         <span>
                           Order now
-                          (<span className={clsx('price', animation)}>{formatPrice(price as number)}</span>)
+                          (<span className={clsx('price', animation)}>{formatPrice(price)}</span>)
                         </span>
                       </div>
                     </Button>

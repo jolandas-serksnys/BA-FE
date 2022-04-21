@@ -20,7 +20,7 @@ export const model = () => {
     toggleSeatsLimit: (id: number) => {
       return api.post(generatePath(TableClaimURL.TOGGLE_SEATS_BYPASS, { id: `${id}` })).then((response) => response?.data);
     },
-    requestAssistance: (type: string, message: string) => {
+    requestAssistance: (type: string, message?: string) => {
       return api.post(TableClaimURL.ASSISTANCE, { type, message }).then((response) => response?.data);
     },
     getAssistanceRequests: () => {

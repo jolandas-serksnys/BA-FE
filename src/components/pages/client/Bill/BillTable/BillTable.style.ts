@@ -8,13 +8,13 @@ export const Row = styled.tr`
     padding: 0.5rem;
   }
 
-  td:first-child,
-  th:first-child {
+  td:first-of-type,
+  th:first-of-type {
     padding-left: 1.5rem;
   }
 
-  td:last-child,
-  th:last-child {
+  td:last-of-type,
+  th:last-of-type {
     padding-right: 1.5rem;
   }
 

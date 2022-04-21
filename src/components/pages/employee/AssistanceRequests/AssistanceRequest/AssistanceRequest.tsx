@@ -2,6 +2,7 @@ import { IconAlert } from "@src/components/icons";
 import { assistanceRequestsQueryKey, model } from "@src/hooks/tableClaim";
 import { AssistanceRequest as Model } from "@src/models/tableClaim";
 import { queryClient } from "@src/utils";
+import clsx from "clsx";
 import React from "react";
 
 interface Props {
@@ -23,8 +24,20 @@ export const AssistanceRequest = ({ data }: Props) => {
     await queryClient.invalidateQueries(assistanceRequestsQueryKey);
   }
 
+  let requestClass = '';
+  switch (data.type) {
+    case 'PAYCARD':
+      requestClass = 'alert-primary';
+      break;
+    case 'PAYCASH':
+      requestClass = 'alert-success';
+      break;
+    default:
+      requestClass = 'alert-warning';
+  }
+
   return (
-    <div className="alert alert-primary border-0 shadow-sm">
+    <div className={clsx('alert border-0 shadow-sm', requestClass)}>
       <div className="d-flex justify-content-between align-items-center">
         <div className="d-flex align-items-center">
           <div className="me-3">
@@ -33,6 +46,12 @@ export const AssistanceRequest = ({ data }: Props) => {
           <div>
             <strong>{data.tableClaim?.table.displayName}</strong>
             <div className="d-flex gap-3">
+              {data.type !== 'OTHER' &&
+                <strong>
+                  {data.type === 'PAYCARD' && 'Payment card'}
+                  {data.type === 'PAYCASH' && 'Payment cash'}
+                </strong>
+              }
               <div className="text-muted">{formatDate(data.createdAt)}</div>
               {data.message && <div className="text-muted">{data.message}</div>}
             </div>

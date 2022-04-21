@@ -19,7 +19,7 @@ export const BillTableRow = ({ data, showOwner }: OrdersListItemProps) => {
           textAlign: "right",
         }}
       >
-        {formatPrice(data.totalPrice)}
+        {formatPrice(data?.totalPrice || 0)}
       </td>
     </Row>
   );

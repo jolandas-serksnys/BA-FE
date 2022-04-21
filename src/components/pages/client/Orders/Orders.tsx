@@ -7,7 +7,7 @@ import { useTable } from "@src/contexts/tableContext";
 import { useGetTableOrder } from "@src/hooks/order";
 import { model, tableClaimQueryKey } from "@src/hooks/tableClaim";
 import { Customer } from "@src/models/customer";
-import { TableClaimStatus } from "@src/models/tableClaim";
+import { AssistanceRequestType, TableClaimStatus } from "@src/models/tableClaim";
 import { queryClient } from "@src/utils";
 import clsx from "clsx";
 import React, { useState } from "react";
@@ -28,6 +28,10 @@ export const OrdersPage = () => {
   const toggleAccessRequests = async () => {
     await model().toggleAccessRequests();
     queryClient.invalidateQueries(tableClaimQueryKey);
+  };
+
+  const requestToPay = async (type: AssistanceRequestType) => {
+    await model().requestAssistance(type);
   };
 
   return (
@@ -75,7 +79,16 @@ export const OrdersPage = () => {
                       Request assistance
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
-                      <Dropdown.Item>I want to pay up</Dropdown.Item>
+                      <Dropdown.Item
+                        onClick={() => requestToPay(AssistanceRequestType.PAYCARD)}
+                      >
+                        I want to pay with card
+                      </Dropdown.Item>
+                      <Dropdown.Item
+                        onClick={() => requestToPay(AssistanceRequestType.PAYCASH)}
+                      >
+                        I want to pay in cash
+                      </Dropdown.Item>
                       <Dropdown.Item
                         onClick={() => setShowAssistanceModal(true)}
                       >
