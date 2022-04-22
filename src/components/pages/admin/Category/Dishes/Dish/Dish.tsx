@@ -33,8 +33,8 @@ export const Dish = (item: Model) => {
         <Column>{item.id}</Column>
         <Column>{item.title}</Column>
         <Column>
-          {item.ageRestriction
-            ? <Badge bg="primary">{item.ageRestriction}</Badge>
+          {item.warningLabel
+            ? <Badge bg="primary">{item.warningLabel}</Badge>
             : <Badge bg="gray" className="text-dark">N/A</Badge>
           }
         </Column>

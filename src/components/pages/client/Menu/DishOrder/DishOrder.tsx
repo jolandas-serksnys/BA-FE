@@ -67,10 +67,10 @@ export const DishOrder = ({ dishId, categoryId, onClose }: Props) => {
             }
             <h2 className="section-heading">{data.title}</h2>
             <div className="mb-3 d-flex gap-3 align-items-center">
-              {data.ageRestriction &&
+              {data.warningLabel &&
                 <h5>
                   <Badge>
-                    {data.ageRestriction}
+                    {data.warningLabel}
                   </Badge>
                 </h5>
               }

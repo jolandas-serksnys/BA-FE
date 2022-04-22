@@ -14,7 +14,7 @@ export const CreateDishModal = ({ onClose, categoryId }: Props) => {
   const initialValues = {
     title: 'New Dish',
     description: '',
-    ageRestriction: '',
+    warningLabel: '',
     isVisible: true,
     isAvailable: true,
     imageUrl: '',

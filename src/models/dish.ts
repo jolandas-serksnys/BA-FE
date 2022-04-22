@@ -32,7 +32,7 @@ export interface Tag extends Base {
 export interface Dish extends Base {
   title: string;
   description: string;
-  ageRestriction: string;
+  warningLabel: string;
   isVisible: boolean;
   isAvailable: boolean;
   imageUrl: string;

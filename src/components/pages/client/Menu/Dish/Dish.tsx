@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Dish as Model } from "@src/models/dish"
-import { AgeRestriction, DishContainer, DishImage, Info } from './Dish.style';
+import { WarningLabel, DishContainer, DishImage, Info } from './Dish.style';
 import { Badge } from "react-bootstrap";
 
 interface Props {
@@ -19,14 +19,14 @@ export const Dish = ({ dish, onClick }: Props) => {
   return (
     <DishContainer onClick={handleOnClick} className="shadow-sm">
       <DishImage src={dish.imageUrl} />
-      {dish.ageRestriction &&
-        <AgeRestriction>
+      {dish.warningLabel &&
+        <WarningLabel>
           <h5>
             <Badge>
-              {dish.ageRestriction}
+              {dish.warningLabel}
             </Badge>
           </h5>
-        </AgeRestriction>
+        </WarningLabel>
       }
       <Info className="card">
         <div className="card-body p-4 d-flex flex-column gap-2">

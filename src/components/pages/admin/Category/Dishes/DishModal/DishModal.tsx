@@ -42,7 +42,7 @@ export const DishModal = ({ title, subTitle, initialValues, onSubmit, onClose, i
               <Input type="text" id="description" name="description" aria-describedby="description" label="Description" />
             </div>
             <div className="mb-3">
-              <Input type="text" id="ageRestriction" name="ageRestriction" aria-describedby="ageRestriction" label="Restriction tag" />
+              <Input type="text" id="warningLabel" name="warningLabel" aria-describedby="warningLabel" label="Restriction tag" />
             </div>
             <div className="mb-3">
               <div className="form-check d-flex gap-3 align-items-center m-0 p-0">

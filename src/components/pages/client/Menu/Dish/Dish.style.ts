@@ -26,7 +26,7 @@ export const DishContainer = styled.div`
   border-radius: 1rem;
 `;
 
-export const AgeRestriction = styled.div`
+export const WarningLabel = styled.div`
   position: absolute;
   top: 1rem;
   right: 1rem;
