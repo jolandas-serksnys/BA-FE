@@ -1,7 +1,6 @@
 import { Button, CardTitle, Input } from "@src/components/common";
 import { establishmentQueryKey, model, useGetEstablishement } from "@src/hooks/establishment";
-import { EstablishmentType } from "@src/models/establishment";
-import { capitalize, queryClient } from "@src/utils";
+import { queryClient } from "@src/utils";
 import { Formik } from "formik";
 import React, { useState } from "react"
 import { Modal } from "react-bootstrap";
@@ -49,26 +48,6 @@ export const EstablishmentModal = ({ onClose }: Props) => {
               </div>
               <div className="mb-3">
                 <Input type="text" id="description" name="description" aria-describedby="description" label="Description" />
-              </div>
-              <div className="mb-3">
-                <label
-                  className="form-label"
-                  htmlFor="type"
-                >
-                  Establishment type
-                </label>
-                <select
-                  id="type"
-                  name="type"
-                  aria-describedby="type"
-                  className="form-control"
-                >
-                  {
-                    Object.values(EstablishmentType).map((type) => (
-                      <option key={type} value={type}>{capitalize(type)}</option>
-                    ))
-                  }
-                </select>
               </div>
             </div>
 
