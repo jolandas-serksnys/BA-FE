@@ -34,9 +34,7 @@ export const Employees = () => {
         noBodyClass
         body={
           <>
-            <div className="d-flex justify-content-end gap-2 p-2 px-3">
-              <Button variant="link" size="sm" className="p-1" onClick={() => setShowCreateModal(true)}>Manage Sign Up codes</Button>
-            </div>
+            <div className="d-flex justify-content-end gap-2 p-2 px-3" style={{ height: 52 }}></div>
             <Table
               headers={headers}
               rows={data && data.map((item: Model) => (
@@ -46,7 +44,7 @@ export const Employees = () => {
             <div className="card-body d-flex justify-content-between">
               <div className="d-flex gap-2"></div>
               <div className="d-flex gap-2">
-                <Button size="sm" onClick={() => setShowCreateModal(true)}>Sign up codes</Button>
+                <Button size="sm" onClick={() => setShowCreateModal(true)}>Sign Up codes</Button>
               </div>
             </div>
           </>

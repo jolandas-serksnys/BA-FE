@@ -17,7 +17,7 @@ const headers = [
       minWidth: '300px'
     }
   },
-  { title: 'Restriction' },
+  { title: 'Warning label' },
   { title: 'Visibility' },
   { title: 'Availability' },
   {
