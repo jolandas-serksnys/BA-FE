@@ -7,6 +7,7 @@ import { queryClient } from "@src/utils";
 import { categoriesQueryKey, model } from "@src/hooks/dish";
 import { EditDishModal } from "../DishModal";
 import { DeleteDishModal } from "../DeleteDishModal";
+import { Link } from "react-router-dom";
 
 export const Dish = (item: Model) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -67,6 +68,9 @@ export const Dish = (item: Model) => {
         </Column>
         <Column>
           <div className="d-flex justify-content-end gap-2">
+            <Link to={`/e/admin/category/${item.categoryId}/dishes/${item.id}`}>
+              <Button size="xs" outline borderless variant="primary" className="px-2 text-nowrap">Manage addons</Button>
+            </Link>
             <Button
               size="xs"
               outline

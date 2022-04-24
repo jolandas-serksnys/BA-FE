@@ -1,4 +1,4 @@
-import { Dish, URL } from "@src/models/dish";
+import { Addon, Dish, URL } from "@src/models/dish";
 import api from "@src/utils/api";
 import { useQuery } from "react-query";
 import { generatePath } from "react-router-dom";
@@ -62,6 +62,36 @@ export const model = () => {
         id: `${id}`
       })).then((response) => response?.data);
     },
+    indexAddons: async (categoryId: number, id: number) => {
+      return await api.get<Addon[]>(generatePath(URL.INDEX_ADDONS, {
+        establishmentId,
+        categoryId: `${categoryId}`,
+        id: `${id}`
+      })).then((response) => response?.data);
+    },
+    createAddon: async (categoryId: number, id: number, addon: Addon) => {
+      return await api.post<Addon>(generatePath(URL.CREATE_ADDON, {
+        establishmentId,
+        categoryId: `${categoryId}`,
+        id: `${id}`
+      }), addon).then((response) => response?.data);
+    },
+    updateAddon: async (categoryId: number, dishId: number, id: number, addon: Addon) => {
+      return await api.put<Addon>(generatePath(URL.UPDATE_ADDON, {
+        establishmentId,
+        categoryId: `${categoryId}`,
+        dishId: `${dishId}`,
+        id: `${id}`,
+      }), addon).then((response) => response?.data);
+    },
+    deleteAddon: async (categoryId: number, dishId: number, id: number) => {
+      return await api.delete(generatePath(URL.DELETE_ADDON, {
+        establishmentId,
+        categoryId: `${categoryId}`,
+        dishId: `${dishId}`,
+        id: `${id}`,
+      })).then((response) => response?.data);
+    }
   });
 };
 
@@ -76,3 +106,7 @@ export const useIndexDishesEmployee = (categoryId: number) => {
 export const useGetDish = (categoryId: number, id: number) => {
   return useQuery([categoriesQueryKey, id], () => model().get(categoryId, id));
 };
+
+export const useIndexAddons = (categoryId: number, id: number) => {
+  return useQuery([categoriesQueryKey, 'category', categoryId, 'dish', id, 'addons'], () => model().indexAddons(categoryId, id));
+}

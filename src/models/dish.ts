@@ -9,6 +9,10 @@ export const URL = {
   DELETE: '/establishment/:establishmentId/category/:categoryId/dish/:id',
   TOGGLE_VISIBILITY: '/establishment/:establishmentId/category/:categoryId/dish/:id/toggle-visibility',
   TOGGLE_AVAILABILITY: '/establishment/:establishmentId/category/:categoryId/dish/:id/toggle-availability',
+  INDEX_ADDONS: '/establishment/:establishmentId/category/:categoryId/dish/:id/addons',
+  CREATE_ADDON: '/establishment/:establishmentId/category/:categoryId/dish/:id/addons',
+  UPDATE_ADDON: '/establishment/:establishmentId/category/:categoryId/dish/:dishId/addons/:id',
+  DELETE_ADDON: '/establishment/:establishmentId/category/:categoryId/dish/:dishId/addons/:id',
 }
 
 export interface Option extends Base {

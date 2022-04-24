@@ -1,5 +1,5 @@
 import { Button, CardTitle, Input } from "@src/components/common";
-import { Dish } from "@src/models/dish";
+import { Addon } from "@src/models/dish";
 import { Field, Formik } from "formik";
 import React from "react"
 import { Modal } from "react-bootstrap";
@@ -8,13 +8,13 @@ import { validationSchema } from "./validation";
 interface Props {
   title: string;
   subTitle: string;
-  initialValues: Dish;
+  initialValues: Addon;
   onSubmit: (values: any, helpers: any) => void;
   onClose: () => void;
   isLoading?: boolean;
 }
 
-export const DishModal = ({ title, subTitle, initialValues, onSubmit, onClose, isLoading }: Props) => (
+export const AddonModal = ({ title, subTitle, initialValues, onSubmit, onClose, isLoading }: Props) => (
   <Modal
     show
     onHide={onClose}
@@ -39,21 +39,15 @@ export const DishModal = ({ title, subTitle, initialValues, onSubmit, onClose, i
               <Input type="text" id="title" name="title" aria-describedby="title" label="Title" />
             </div>
             <div className="mb-3">
-              <Input type="text" id="description" name="description" aria-describedby="description" label="Description" />
-            </div>
-            <div className="mb-3">
-              <Input type="text" id="warningLabel" name="warningLabel" aria-describedby="warningLabel" label="Restriction tag" />
-            </div>
-            <div className="mb-3">
               <div className="form-check d-flex gap-3 align-items-center m-0 p-0">
                 <Field
                   type="checkbox"
-                  id="isVisible"
-                  name="isVisible"
+                  id="isOptional"
+                  name="isOptional"
                   className="form-check-input p-2 m-0"
                 />
-                <label className="form-check-label" htmlFor="isVisible">
-                  Is visible to customers
+                <label className="form-check-label" htmlFor="isOptional">
+                  Is optional
                 </label>
               </div>
             </div>
@@ -61,20 +55,14 @@ export const DishModal = ({ title, subTitle, initialValues, onSubmit, onClose, i
               <div className="form-check d-flex gap-3 align-items-center m-0 p-0">
                 <Field
                   type="checkbox"
-                  id="isAvailable"
-                  name="isAvailable"
+                  id="isMultiple"
+                  name="isMultiple"
                   className="form-check-input p-2 m-0"
                 />
-                <label className="form-check-label" htmlFor="isAvailable">
-                  Is available for order
+                <label className="form-check-label" htmlFor="isMultiple">
+                  Is multichoice
                 </label>
               </div>
-            </div>
-            <div className="mb-3">
-              <Input type="text" id="imageUrl" name="imageUrl" aria-describedby="imageUrl" label="Image URL" />
-            </div>
-            <div className="mb-3">
-              <Input type="number" id="basePrice" name="basePrice" aria-describedby="basePrice" label="Base price" />
             </div>
           </div>
 
