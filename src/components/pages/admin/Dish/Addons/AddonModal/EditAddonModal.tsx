@@ -21,6 +21,7 @@ export const EditAddonModal = ({ item, dish, onClose }: Props) => {
       initialValues={initialValues}
       onClose={onClose}
       isLoading={false}
+      isEdit={true}
       onSubmit={async (values, helpers) => {
         try {
           await model().updateAddon(dish.categoryId, dish.id, item.id, values);

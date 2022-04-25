@@ -10,8 +10,8 @@ export const orderReceptsQueryKey = 'order-receipts';
 export const orderReceptsTotalQueryKey = 'order-total';
 
 export const model = () => ({
-  calculatePrice: async (data: any) => {
-    return api.post(URL.CALCULATE_PRICE, data).then((response) => response?.data);
+  calculatePrice: async (dishId: number, options: any[], quantity: number) => {
+    return api.post(URL.CALCULATE_PRICE, { dishId, options, quantity }).then((response) => response?.data);
   },
   sendOrder: async (data: any) => {
     return api.post(URL.ORDER, data).then((response) => response?.data);
@@ -42,8 +42,8 @@ export const model = () => ({
   },
 });
 
-export const useCalculatePrice = (options: any) => {
-  return useQuery([orderClaimQueryKey, options], () => model().calculatePrice(options), {
+export const useCalculatePrice = (dishId: number, options: any[], quantity: number) => {
+  return useQuery([orderClaimQueryKey, options, quantity], () => model().calculatePrice(dishId, options, quantity), {
     staleTime: 1000 * 60 * 5
   });
 };
