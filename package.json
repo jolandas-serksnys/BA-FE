@@ -10,6 +10,9 @@
   },
   "devDependencies": {
     "@marshallofsound/webpack-asset-relocator-loader": "^0.5.0",
+    "@testing-library/jest-dom": "^5.16.4",
+    "@testing-library/react": "12.1.2",
+    "@types/jest": "^27.4.1",
     "@types/react": "^17.0.3",
     "@types/react-dom": "^17.0.2",
     "@types/webpack-env": "^1.16.0",
@@ -24,11 +27,15 @@
     "file-loader": "^6.2.0",
     "fork-ts-checker-webpack-plugin": "^6.2.4",
     "html-webpack-plugin": "^5.3.1",
+    "install": "^0.13.0",
+    "jest": "27",
     "less": "^4.1.1",
     "less-loader": "8.1.1",
     "mini-css-extract-plugin": "^1.5.0",
     "react-hot-loader": "^4.13.0",
+    "react-test-renderer": "^18.1.0",
     "style-loader": "^2.0.0",
+    "ts-jest": "^27.1.4",
     "ts-loader": "^9.1.0",
     "typescript": "^4.2.3",
     "webpack": "^5.35.0",
@@ -59,5 +66,23 @@
     "sass-loader": "^12.6.0",
     "socket.io-client": "^4.4.1",
     "yup": "^0.32.11"
+  },
+  "jest": {
+    "transform": {
+      ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
+    "testEnvironment": "jsdom",
+    "moduleNameMapper": {
+      "^@src(.*)$": "<rootDir>/src$1"
+    },
+    "setupFilesAfterEnv": [
+      "<rootDir>/tools/testing/setupTests.ts"
+    ]
   }
 }
