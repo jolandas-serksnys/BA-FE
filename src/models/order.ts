@@ -10,7 +10,7 @@ export const URL = {
   ACTIVE: '/order/active',
   UPDATE_STATUS: '/order/:id/status',
   TOGGLE_TABBLE_ORDER_CLAIM: '/order/table/:id/toggle',
-  USER_RECEIPT: '/order/receipt/user',
+  USER_RECEIPT: '/order/receipt/customer',
   ORDER_RECEIPTS: '/order/receipts',
   ORDER_TOTAL: '/order/receipt/total'
 }
