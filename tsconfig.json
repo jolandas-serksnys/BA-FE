@@ -27,7 +27,8 @@
       "*": ["node_modules/*"],
       "@assets/*": ["./assets/*"],
       "@src/*": ["./src/*"]
-    }
+    },
+    "types": ["node", "jest", "@testing-library/jest-dom", "webpack-env"],
   },
   "include": ["src/**/*", "tools/**/*"]
 }

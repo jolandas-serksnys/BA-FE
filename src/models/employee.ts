@@ -12,12 +12,11 @@ export const URL = {
 }
 
 export enum EmployeeRole {
-  GENERAL = 'GENERAL',
-  WAITER = 'WAITER',
-  ADMINISTRATOR = 'ADMINISTRATOR',
-  RECEPTIONIST = 'RECEPTIONIST',
-  KITCHEN = 'KITCHEN',
-  OTHER = 'OTHER'
+  GENERAL = 'general',
+  WAITER = 'waiter',
+  ADMINISTRATOR = 'administrator',
+  KITCHEN = 'kitchenStaff',
+  OTHER = 'other'
 }
 
 export interface Employee extends User {
