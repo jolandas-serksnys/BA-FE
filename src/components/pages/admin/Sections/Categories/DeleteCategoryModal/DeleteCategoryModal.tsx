@@ -16,7 +16,7 @@ export const DeleteTableModal = ({ item, onClose }: Props) => {
   return (
     <ConfirmModal
       title="Delete"
-      subTitle="Delete table"
+      subTitle="Delete category"
       onConfirm={async () => {
         try {
           await model().delete(item.id);

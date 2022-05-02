@@ -1,14 +1,20 @@
-import { SectionHeader } from "@src/components/common";
+import { Button, SectionHeader } from "@src/components/common";
 import { Layout } from "@src/components/common/Layout";
 import { useCustomerReceipt, useOrderRecepts, useOrderReceptTotal } from "@src/hooks/order";
 import { formatPrice } from "@src/utils";
 import React from "react";
 import { BillTable } from "./BillTable";
+import { model } from "@src/hooks/tableClaim";
+import { AssistanceRequestType } from "@src/models/tableClaim";
 
 export const BillPage = () => {
   const { data: customerReceipt } = useCustomerReceipt();
   const { data: orderReceipts } = useOrderRecepts();
   const { data: orderReceiptTotal } = useOrderReceptTotal();
+
+  const requestToPay = async (type: AssistanceRequestType) => {
+    await model().requestAssistance(type);
+  };
 
   return (
     <Layout>
@@ -31,6 +37,10 @@ export const BillPage = () => {
         {orderReceiptTotal && <span className="text-primary">{formatPrice(orderReceiptTotal.total)}</span>}
       </h2>
 
+      <div className="w-100 d-flex gap-2 mt-3">
+        <Button className="w-100" onClick={() => requestToPay(AssistanceRequestType.PAYCARD)}>Pay by card</Button>
+        <Button className="w-100" onClick={() => requestToPay(AssistanceRequestType.PAYCASH)}>Pay in cash</Button>
+      </div>
     </Layout>
   )
 };

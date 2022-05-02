@@ -137,7 +137,7 @@ export const OrdersPage = () => {
                   <Tab.Content>
                     {data && data.map((item, index) => (
                       <Tab.Pane key={item.id} eventKey={index}>
-                        {item.table_claim.assistanceRequests
+                        {item.table_claim?.assistanceRequests
                           && item.table_claim.assistanceRequests.length > 0 &&
                           <Alert variant="warning" className="p-4 py-3">
                             <Alert.Heading>

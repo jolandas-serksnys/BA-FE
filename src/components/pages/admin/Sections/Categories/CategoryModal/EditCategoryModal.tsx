@@ -12,8 +12,8 @@ interface Props {
 
 export const EditCategoryModal = ({ item, onClose }: Props) => (
   <CategoryModal
-    title="Edit Table"
-    subTitle="Edit selected table"
+    title="Edit Category"
+    subTitle="Edit selected category"
     initialValues={item}
     onClose={onClose}
     isLoading={false}
