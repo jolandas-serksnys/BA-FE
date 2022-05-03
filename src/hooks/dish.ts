@@ -6,7 +6,7 @@ import { generatePath } from "react-router-dom";
 export const categoriesQueryKey = 'dishes';
 
 export const model = () => {
-  const establishmentId = process.env.ESTABLISHMENT_ID;
+  const establishmentId = process.env.ESTABLISHMENT_ID || '1';
 
   return ({
     index: async (categoryId: number) => {

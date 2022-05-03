@@ -40,10 +40,6 @@ export const DishOrder = ({ dish, onClose }: Props) => {
     }
   }, [priceData]);
 
-  useEffect(() => {
-    console.log(options);
-  }, [options]);
-
   const initialValues: FieldValueProps = {
     comment: '',
     quantity: 1,
@@ -254,7 +250,7 @@ export const DishOrder = ({ dish, onClose }: Props) => {
                   <Button variant="gray" onClick={onClose}>
                     Close
                   </Button>
-                  <Button type="submit">
+                  <Button type="submit" disabled={tableClaim.status === TableClaimStatus.CLOSED}>
                     <div className="d-inline-flex gap-2 align-items-center">
                       <div className="d-inline"><IconShoppingBasket /></div>
                       <span>

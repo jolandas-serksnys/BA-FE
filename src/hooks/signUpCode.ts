@@ -7,7 +7,7 @@ import { URL } from "@src/models/signUpCode";
 export const signUpCodesQueryKey = 'sign-up-codes';
 
 export const model = () => {
-  const establishmentId = process.env.ESTABLISHMENT_ID;
+  const establishmentId = process.env.ESTABLISHMENT_ID || '1';
 
   return ({
     list: async () => {

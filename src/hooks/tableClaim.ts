@@ -8,7 +8,7 @@ export const tableClaimQueryKey = 'table-claim';
 export const assistanceRequestsQueryKey = 'assistance-requests';
 
 export const model = () => {
-  const establishmentId = process.env.ESTABLISHMENT_ID;
+  const establishmentId = process.env.ESTABLISHMENT_ID || '1';
 
   return ({
     getClaimed: () => {

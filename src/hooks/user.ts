@@ -9,7 +9,7 @@ import { generatePath, useNavigate } from 'react-router-dom';
 export const userQueryKey = 'user';
 
 export const model = () => {
-  const establishmentId = process.env.ESTABLISHMENT_ID;
+  const establishmentId = process.env.ESTABLISHMENT_ID || '1';
 
   return ({
     getCurrentUser: async () => {

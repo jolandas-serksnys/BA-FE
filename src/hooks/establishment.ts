@@ -7,7 +7,7 @@ import { URL } from "@src/models/establishment";
 export const establishmentQueryKey = 'establishment';
 
 export const model = () => {
-  const establishmentId = process.env.ESTABLISHMENT_ID;
+  const establishmentId = process.env.ESTABLISHMENT_ID || '1';
 
   return ({
     get: async (): Promise<Establishment> => {

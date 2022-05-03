@@ -7,7 +7,7 @@ export const categoriesQueryKey = 'categories';
 export const categoryQueryKey = (id: number) => `category-${id}`;
 
 export const model = () => {
-  const establishmentId = process.env.ESTABLISHMENT_ID;
+  const establishmentId = process.env.ESTABLISHMENT_ID || '1';
 
   return ({
     index: async () => {
