@@ -6,7 +6,7 @@ import { useGetEstablishement } from "@src/hooks/establishment";
 import { model } from "@src/hooks/user";
 import { Employee } from "@src/models/employee";
 import { capitalize } from "@src/utils";
-import { Form, Formik } from "formik";
+import { Form, Formik, FormikHelpers } from "formik";
 import React, { useState } from "react";
 import { Modal } from "react-bootstrap";
 
@@ -20,30 +20,27 @@ export const EmployeeAccount = ({ onClose }: Props): JSX.Element => {
   const user = userGeneric as Employee;
   const { data: establishment } = useGetEstablishement();
 
-  const handleSubmit = async (values: any) => {
-    switch (showForm) {
-      case 'account':
-        try {
-          const updatedData = await model().employeeUpdateAccount(values);
-          updatedEmployeeData(updatedData);
-          setShowForm(undefined);
-        } catch (error) {
-          console.log(error);
-        }
-        break;
+  const handleSubmitAccount = async (values: any, { resetForm }: FormikHelpers<any>) => {
+    try {
+      const updatedData = await model().employeeUpdateAccount(values);
+      updatedEmployeeData(updatedData);
+      setShowForm(undefined);
+      resetForm();
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-      case 'password':
-        try {
-          const updatedData = await model().employeeUpdatePassword(values);
-          updatedEmployeeData(updatedData);
-          setShowForm(undefined);
-        } catch (error) {
-          console.log(error);
-        }
-        break;
-
-      default:
-        break;
+  const handleSubmitPassword = async (values: any, { resetForm }: FormikHelpers<any>) => {
+    try {
+      const updatedData = await model().employeeUpdatePassword(values);
+      if (updatedData) {
+        updatedEmployeeData(updatedData);
+        setShowForm(undefined);
+        resetForm();
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -64,61 +61,82 @@ export const EmployeeAccount = ({ onClose }: Props): JSX.Element => {
           </h5>
         </Header>
 
-        <Formik initialValues={user} onSubmit={handleSubmit}>
-          {() => (
-            <Form>
-              <div className="p-4 d-flex flex-column gap-3">
-                {!showForm &&
-                  <>
-                    <Button variant="gray" onClick={() => setShowForm('account')}>
-                      Manage Account
-                    </Button>
-                    <Button variant="gray" onClick={() => setShowForm('password')}>
-                      Change Password
-                    </Button>
-                    <Button variant="gray" onClick={signOut}>
-                      Sign Out
-                    </Button>
-                  </>
-                }
-                {showForm === 'account' &&
-                  <>
-                    <Input name="email" label="Email addresss" type="email" disabled />
-                    <Input name="firstName" label="First Name" />
-                    <Input name="lastName" label="Last Name" />
-                  </>
-                }
-                {showForm === 'password' &&
-                  <>
-                    <Input name="currentPassword" label="Current Password" type="password" />
-                    <Input name="password" label="New Password" type="password" />
-                    <Input name="passwordConfirmation" label="Repeat New Password" type="password" />
-                  </>
-                }
-              </div>
-
-              <div className="pb-2 sticky-bottom">
-                <div className="d-flex gap-2 flex-equal-2 p-2 mx-3 rounded shadow-sm bg-white">
-                  {showForm &&
-                    <>
-                      <Button onClick={() => setShowForm(undefined)} variant="gray">
-                        Back
-                      </Button>
-                      <Button type="submit">
-                        Save
-                      </Button>
-                    </>
-                  }
-                  {!showForm &&
-                    <Button onClick={onClose}>
-                      Close
-                    </Button>
-                  }
+        {showForm === 'account' &&
+          <Formik initialValues={user} onSubmit={handleSubmitAccount}>
+            {() => (
+              <Form>
+                <div className="p-4 d-flex flex-column gap-3">
+                  <Input name="email" label="Email addresss" type="email" disabled />
+                  <Input name="firstName" label="First Name" />
+                  <Input name="lastName" label="Last Name" />
                 </div>
+
+                <div className="pb-2 sticky-bottom">
+                  <div className="d-flex gap-2 flex-equal-2 p-2 mx-3 rounded shadow-sm bg-white">
+                    <Button onClick={() => setShowForm(undefined)} variant="gray">
+                      Back
+                    </Button>
+                    <Button type="submit">
+                      Save
+                    </Button>
+                  </div>
+                </div>
+              </Form>
+            )}
+          </Formik>
+        }
+
+        {showForm === 'password' &&
+          <Formik initialValues={{
+            currentPassword: '',
+            password: '',
+            passwordConfirmation: ''
+          }} onSubmit={handleSubmitPassword}>
+            {() => (
+              <Form>
+                <div className="p-4 d-flex flex-column gap-3">
+                  <Input name="currentPassword" label="Current Password" type="password" />
+                  <Input name="password" label="New Password" type="password" />
+                  <Input name="passwordConfirmation" label="Repeat New Password" type="password" />
+                </div>
+
+                <div className="pb-2 sticky-bottom">
+                  <div className="d-flex gap-2 flex-equal-2 p-2 mx-3 rounded shadow-sm bg-white">
+                    <Button onClick={() => setShowForm(undefined)} variant="gray">
+                      Back
+                    </Button>
+                    <Button type="submit">
+                      Save
+                    </Button>
+                  </div>
+                </div>
+              </Form>
+            )}
+          </Formik>
+        }
+        {!showForm &&
+          <>
+            <div className="p-4 d-flex flex-column gap-3">
+              <Button variant="gray" onClick={() => setShowForm('account')}>
+                Manage Account
+              </Button>
+              <Button variant="gray" onClick={() => setShowForm('password')}>
+                Change Password
+              </Button>
+              <Button variant="gray" onClick={signOut}>
+                Sign Out
+              </Button>
+            </div>
+
+            <div className="pb-2 sticky-bottom">
+              <div className="d-flex gap-2 flex-equal-2 p-2 mx-3 rounded shadow-sm bg-white">
+                <Button onClick={onClose}>
+                  Close
+                </Button>
               </div>
-            </Form>
-          )}
-        </Formik>
+            </div>
+          </>
+        }
       </>
     </Modal>
   );
