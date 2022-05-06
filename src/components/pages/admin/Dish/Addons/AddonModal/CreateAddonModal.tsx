@@ -24,7 +24,7 @@ export const CreateAddonModal = ({ onClose, dish }: Props) => {
       subTitle="Add a new dish addon"
       initialValues={initialValues}
       onClose={onClose}
-      onSubmit={async (values, helpers) => {
+      onSubmit={async (values) => {
         try {
           await model().createAddon(dish.categoryId, dish.id, values);
           await queryClient.invalidateQueries([categoriesQueryKey, 'category', dish.categoryId, 'dish', dish.id, 'addons']);

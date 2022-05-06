@@ -40,7 +40,7 @@ export const EstablishmentModal = ({ onClose }: Props) => {
         initialValues={data}
         validationSchema={validationSchema}
       >
-        {({ submitForm, values }) => (
+        {({ submitForm }) => (
           <>
             <div className="p-4 px-5">
               <div className="mb-3">

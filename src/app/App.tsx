@@ -3,7 +3,6 @@ import { queryClient } from '@src/utils/queryClient';
 import React from 'react';
 import { hot } from 'react-hot-loader';
 import { QueryClientProvider } from 'react-query';
-import { ReactQueryDevtools } from 'react-query/devtools'
 
 import '@assets/css/reset.css';
 import '@assets/css/opensans.css';

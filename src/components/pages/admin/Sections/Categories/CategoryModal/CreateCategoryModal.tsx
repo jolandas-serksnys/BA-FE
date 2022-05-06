@@ -22,7 +22,7 @@ export const CreateCategoryModal = ({ onClose }: Props) => {
       subTitle="Add a new category"
       initialValues={initialValues}
       onClose={onClose}
-      onSubmit={async (values: any, helpers: any) => {
+      onSubmit={async (values: any) => {
         try {
           await model().create(values);
           await queryClient.invalidateQueries(categoriesQueryKey);

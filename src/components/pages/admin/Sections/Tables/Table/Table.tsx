@@ -4,20 +4,17 @@ import { model, tablesQueryKey } from "@src/hooks/table";
 import { Table as Model } from "@src/models/table";
 import { queryClient } from "@src/utils";
 import React, { useState } from "react";
-import { Badge, Dropdown, DropdownButton } from "react-bootstrap";
+import { Dropdown } from "react-bootstrap";
 import { DeleteTableModal } from "../DeleteTableModal";
 import { EditTableModal } from "../TableModal/EditTableModal";
 
 export const Table = (item: Model) => {
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
 
   const toggleAvailability = async () => {
-    setIsLoading(true);
     await model().toggleAvailability(item.id);
     queryClient.invalidateQueries(tablesQueryKey);
-    setIsLoading(false);
   }
 
   return (

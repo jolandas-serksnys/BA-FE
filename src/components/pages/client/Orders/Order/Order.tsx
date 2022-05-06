@@ -1,8 +1,8 @@
 import { Button } from "@src/components/common";
 import { useAuth } from "@src/contexts/authContext";
 import { model, orderClaimQueryKey } from "@src/hooks/order";
-import { CustomerOrder } from "@src/models/order";
-import { CustomerOrderStatus } from "@src/models/order";
+import { CustomerOrder , CustomerOrderStatus } from "@src/models/order";
+
 import { capitalize, queryClient } from "@src/utils";
 import clsx from "clsx";
 import React, { useState } from "react";

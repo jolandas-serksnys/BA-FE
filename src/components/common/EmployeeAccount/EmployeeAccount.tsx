@@ -20,7 +20,7 @@ export const EmployeeAccount = ({ onClose }: Props): JSX.Element => {
   const user = userGeneric as Employee;
   const { data: establishment } = useGetEstablishement();
 
-  const handleSubmit = async (values: any, helpers: any) => {
+  const handleSubmit = async (values: any) => {
     switch (showForm) {
       case 'account':
         try {
@@ -65,7 +65,7 @@ export const EmployeeAccount = ({ onClose }: Props): JSX.Element => {
         </Header>
 
         <Formik initialValues={user} onSubmit={handleSubmit}>
-          {({ submitForm }) => (
+          {() => (
             <Form>
               <div className="p-4 d-flex flex-column gap-3">
                 {!showForm &&

@@ -2,7 +2,7 @@ import { Card, CardTitle, Input, Button } from "@src/components/common";
 import { Layout } from "@src/components/common/Layout/Layout";
 import { useSignUpEmployee } from "@src/hooks/user";
 import { Form, Formik } from "formik";
-import React, { FormEvent } from "react";
+import React from "react";
 import { validationSchema } from "./validation";
 
 export const SignUpPage = () => {

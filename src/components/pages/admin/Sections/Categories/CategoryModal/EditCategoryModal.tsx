@@ -17,7 +17,7 @@ export const EditCategoryModal = ({ item, onClose }: Props) => (
     initialValues={item}
     onClose={onClose}
     isLoading={false}
-    onSubmit={async (values, helpers) => {
+    onSubmit={async (values) => {
       try {
         await model().update(item.id, values);
         await queryClient.invalidateQueries(categoriesQueryKey);

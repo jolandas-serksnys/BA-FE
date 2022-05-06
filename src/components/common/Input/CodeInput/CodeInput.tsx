@@ -21,9 +21,9 @@ export const CodeInput = ({ value, setValue, length, ...props }: Props) => {
   const symbols = props.type === 'numberic' ? /^[0-9]+$/ : /^[0-9a-zA-Z]+$/;
 
   const nextInput = (event: React.KeyboardEvent<HTMLInputElement>, senderIndex: number) => {
-    let senderElement = event.target as HTMLInputElement;
+    const senderElement = event.target as HTMLInputElement;
     let nextElement;
-    let oldValues = values;
+    const oldValues = values;
 
     if (event.ctrlKey && event.key === 'V') {
       return;

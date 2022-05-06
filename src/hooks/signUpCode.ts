@@ -1,8 +1,7 @@
 import api from "@src/utils/api";
-import { SignUpCode } from "@src/models/signUpCode";
+import { SignUpCode, URL } from "@src/models/signUpCode";
 import { useQuery } from "react-query";
 import { generatePath } from "react-router-dom";
-import { URL } from "@src/models/signUpCode";
 
 export const signUpCodesQueryKey = 'sign-up-codes';
 

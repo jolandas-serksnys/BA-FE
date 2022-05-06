@@ -11,19 +11,19 @@ export const model = () => {
 
   return ({
     index: async () => {
-      return await api.get<Category[]>(generatePath(URL.LIST, { establishmentId: `${establishmentId}` })).then((response) => response?.data);
+      return await api.get<Category[]>(generatePath(URL.LIST, { establishmentId })).then((response) => response?.data);
     },
     get: async (id: number) => {
-      return await api.get<Category>(generatePath(URL.GET, { establishmentId: `${establishmentId}`, id: `${id}` })).then((response) => response?.data);
+      return await api.get<Category>(generatePath(URL.GET, { establishmentId, id: `${id}` })).then((response) => response?.data);
     },
     create: async (data: Category) => {
-      return await api.post(generatePath(URL.CREATE, { establishmentId: `${establishmentId}` }), data).then((response) => response?.data);
+      return await api.post(generatePath(URL.CREATE, { establishmentId }), data).then((response) => response?.data);
     },
     update: async (id: number, data: Category) => {
-      return await api.put(generatePath(URL.DELETE, { establishmentId: `${establishmentId}`, id: `${id}` }), data).then((response) => response?.data);
+      return await api.put(generatePath(URL.DELETE, { establishmentId, id: `${id}` }), data).then((response) => response?.data);
     },
     delete: async (id: number) => {
-      return await api.delete(generatePath(URL.DELETE, { establishmentId: `${establishmentId}`, id: `${id}` })).then((response) => response?.data);
+      return await api.delete(generatePath(URL.DELETE, { establishmentId, id: `${id}` })).then((response) => response?.data);
     }
   });
 };

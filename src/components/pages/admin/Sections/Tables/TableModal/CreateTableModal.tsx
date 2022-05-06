@@ -24,7 +24,7 @@ export const CreateTableModal = ({ onClose }: Props) => {
       subTitle="Add a new table"
       initialValues={initialValues}
       onClose={onClose}
-      onSubmit={async (values, helpers) => {
+      onSubmit={async (values) => {
         try {
           await model().create(values);
           await queryClient.invalidateQueries(tablesQueryKey);

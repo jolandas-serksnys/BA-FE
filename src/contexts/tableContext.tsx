@@ -16,7 +16,7 @@ const tableContextDefaultValues: TableContextInterface = {
   table: null,
   tableClaim: null,
   tableUpdates: false,
-  setUpdates: (updates?: boolean) => { },
+  setUpdates: () => ({}),
   isLoading: true
 };
 

@@ -1,7 +1,7 @@
 import { Button, CardTitle, Input } from "@src/components/common";
 import { model } from "@src/hooks/tableClaim";
 import { AssistanceRequestType } from "@src/models/tableClaim";
-import { Form, Formik } from "formik";
+import { Form, Formik, FormikHelpers } from "formik";
 import React from "react";
 import { Modal } from "react-bootstrap";
 
@@ -9,12 +9,16 @@ interface Props {
   onClose: () => void;
 }
 
+interface FormFields {
+  message: string;
+}
+
 export const AssistanceModal = ({ onClose }: Props): JSX.Element => {
-  const initialValues = {
+  const initialValues: FormFields = {
     message: ''
   };
 
-  const onSubmit = async (values: any, helpers: any) => {
+  const onSubmit = async (values: FormFields, helpers: FormikHelpers<FormFields>) => {
     try {
       await model().requestAssistance(AssistanceRequestType.OTHER, values.message);
       helpers.resetForm();

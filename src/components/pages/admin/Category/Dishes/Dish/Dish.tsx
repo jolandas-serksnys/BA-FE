@@ -10,22 +10,17 @@ import { DeleteDishModal } from "../DeleteDishModal";
 import { Link } from "react-router-dom";
 
 export const Dish = (item: Model) => {
-  const [isLoading, setIsLoading] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const toggleAvailability = async () => {
-    setIsLoading(true);
     await model().toggleAvailability(item.categoryId, item.id);
     queryClient.invalidateQueries(categoriesQueryKey);
-    setIsLoading(false);
   }
 
   const toggleVisibility = async () => {
-    setIsLoading(true);
     await model().toggleVisibility(item.categoryId, item.id);
     queryClient.invalidateQueries(categoriesQueryKey);
-    setIsLoading(false);
   }
 
   return (

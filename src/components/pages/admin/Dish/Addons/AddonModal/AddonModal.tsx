@@ -1,6 +1,6 @@
 import { Button, CardTitle, Input } from "@src/components/common";
 import { IconAdd, IconDelete } from "@src/components/icons";
-import { Addon, Option } from "@src/models/dish";
+import { Addon } from "@src/models/dish";
 import { Field, FieldArray, Form, Formik } from "formik";
 import React from "react"
 import { Modal } from "react-bootstrap";
@@ -22,8 +22,7 @@ export const AddonModal = ({
   initialValues,
   onSubmit,
   onClose,
-  isLoading,
-  isEdit
+  isLoading
 }: Props) => (
   <Modal
     show

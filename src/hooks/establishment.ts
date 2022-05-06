@@ -1,8 +1,8 @@
-import { Establishment } from "@src/models/establishment";
+import { Establishment , URL } from "@src/models/establishment";
 import api from "@src/utils/api";
 import { useQuery } from "react-query";
 import { generatePath } from "react-router-dom";
-import { URL } from "@src/models/establishment";
+
 
 export const establishmentQueryKey = 'establishment';
 

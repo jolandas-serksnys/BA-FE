@@ -1,5 +1,4 @@
 import { Button, Card, SectionHeader, Table } from "@src/components/common";
-import { IconAdd } from "@src/components/icons";
 import { useGetEmployees } from "@src/hooks/employee";
 import { Employee as Model } from "@src/models/employee";
 import React, { useState } from "react";

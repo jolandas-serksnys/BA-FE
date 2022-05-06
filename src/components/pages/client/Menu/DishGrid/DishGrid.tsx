@@ -30,7 +30,13 @@ export const DishGrid = ({ category }: Props) => {
             <Dish dish={dish} onClick={() => setDishId(dish.id)} />
           </DishGridCell>
         ))}
-        {dishId && <DishOrder dishId={dishId} categoryId={category.id} onClose={() => setDishId(null)} />}
+        {dishId &&
+          <DishOrder
+            dishId={dishId}
+            categoryId={category.id}
+            onClose={() => setDishId(null)}
+          />
+        }
       </DishGridContainer>
     </>
   )

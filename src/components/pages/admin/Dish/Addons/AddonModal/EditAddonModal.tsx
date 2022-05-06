@@ -22,7 +22,7 @@ export const EditAddonModal = ({ item, dish, onClose }: Props) => {
       onClose={onClose}
       isLoading={false}
       isEdit={true}
-      onSubmit={async (values, helpers) => {
+      onSubmit={async (values) => {
         try {
           await model().updateAddon(dish.categoryId, dish.id, item.id, values);
           await queryClient.invalidateQueries([categoriesQueryKey, 'category', dish.categoryId, 'dish', dish.id, 'addons']);

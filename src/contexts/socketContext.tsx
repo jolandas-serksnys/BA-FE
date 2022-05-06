@@ -44,12 +44,12 @@ export const SocketProvider = ({ children }: Props) => {
     });
 
     if (user.isEmployee) {
-      newSocket.on('status', (data: any) => {
+      newSocket.on('status', () => {
         setUpdates(true);
         queryClient.invalidateQueries(activeOrdersQueryKey);
       });
     } else {
-      newSocket.on('status', (data: any) => {
+      newSocket.on('status', () => {
         setUpdates(true);
         queryClient.invalidateQueries(orderClaimQueryKey);
         queryClient.invalidateQueries(customerReceptQueryKey);
@@ -57,7 +57,7 @@ export const SocketProvider = ({ children }: Props) => {
         queryClient.invalidateQueries(orderReceptsTotalQueryKey);
       });
 
-      newSocket.on('joined', (data: any) => {
+      newSocket.on('joined', () => {
         queryClient.invalidateQueries(tableClaimQueryKey);
       });
     }

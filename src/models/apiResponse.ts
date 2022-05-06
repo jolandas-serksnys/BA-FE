@@ -3,7 +3,7 @@ export enum ResponseType {
   WARNING = 'warning',
   INFO = 'info',
   DANGER = 'danger',
-};
+}
 
 export interface ApiResponse<T> {
   data: {

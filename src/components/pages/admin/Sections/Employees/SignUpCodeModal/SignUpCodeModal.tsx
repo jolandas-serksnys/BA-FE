@@ -4,7 +4,6 @@ import { model, signUpCodesQueryKey, useGetSignUpCodes } from "@src/hooks/signUp
 import { EmployeeRole } from "@src/models/employee";
 import { SignUpCode } from "@src/models/signUpCode";
 import { capitalize, queryClient } from "@src/utils";
-import clsx from "clsx";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 
@@ -16,7 +15,7 @@ export const SignUpCodeModal = ({ onClose }: Props) => {
   const [code, setCode] = useState("");
   const [role, setRole] = useState(EmployeeRole.GENERAL);
 
-  const { data, isLoading: listIsLoading, error: listError } = useGetSignUpCodes();
+  const { data } = useGetSignUpCodes();
 
   const deleteSignUpCode = async (id: number) => {
     await model().delete(id);

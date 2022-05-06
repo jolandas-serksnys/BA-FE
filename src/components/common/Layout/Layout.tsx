@@ -9,12 +9,12 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
   noContainerClass?: boolean;
 }
 
-export const Layout = ({ noHeader, noFooter, noContainerClass, ...props }: Props) => (
+export const Layout = ({ noHeader, noContainerClass, noFooter, ...props }: Props) => (
   <>
     {!noHeader ? <NavBar /> : <div></div>}
     <div {...props} className={clsx(!noContainerClass ? 'container' : '', props.className)}>
       {props.children}
     </div>
-    <BottomNav />
+    {!noFooter && <BottomNav />}
   </>
 );

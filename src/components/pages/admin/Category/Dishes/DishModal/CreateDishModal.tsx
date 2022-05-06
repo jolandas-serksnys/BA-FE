@@ -30,7 +30,7 @@ export const CreateDishModal = ({ onClose, categoryId }: Props) => {
       subTitle="Add a new dish"
       initialValues={initialValues}
       onClose={onClose}
-      onSubmit={async (values, helpers) => {
+      onSubmit={async (values) => {
         try {
           await model().create(categoryId, values);
           await queryClient.invalidateQueries([categoriesQueryKey, 'category', categoryId]);

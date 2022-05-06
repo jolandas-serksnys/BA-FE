@@ -7,7 +7,7 @@ import { Addon, Dish, Option } from "@src/models/dish";
 import { TableClaimStatus } from "@src/models/tableClaim";
 import { formatPrice } from "@src/utils/formatPrice";
 import clsx from "clsx";
-import { Field, FieldArray, Form, Formik, useFormik } from "formik";
+import { Field, FieldArray, Form, Formik } from "formik";
 import React, { useEffect, useState } from "react"
 import { Badge, Modal } from "react-bootstrap"
 import { DishImage } from "../Dish/Dish.style";
@@ -49,7 +49,7 @@ export const DishOrder = ({ dish, onClose }: Props) => {
     }))
   };
 
-  const handleSubmit = async (values: any, helpers: any) => {
+  const handleSubmit = async (values: any) => {
     try {
       await model().sendOrder({
         tableClaimId: tableClaim.id,

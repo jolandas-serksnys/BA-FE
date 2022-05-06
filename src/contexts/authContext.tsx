@@ -1,8 +1,8 @@
-import React from "react";
+import React, { createContext, ReactNode, useContext, useEffect, useState } from "react";
 import { userQueryKey } from "@src/hooks/user";
 import { Customer } from "@src/models/customer";
 import { Employee } from "@src/models/employee";
-import { createContext, ReactNode, useContext, useEffect, useState } from "react";
+
 
 interface AuthContextInterface {
   user: Customer | Employee | null;
@@ -15,7 +15,7 @@ interface AuthContextInterface {
 const authContextDefaultValues: AuthContextInterface = {
   user: null,
   isLoading: true,
-  signIn: (props: any) => ({}),
+  signIn: () => ({}),
   signOut: () => ({}),
   updatedEmployeeData: () => ({}),
 };
