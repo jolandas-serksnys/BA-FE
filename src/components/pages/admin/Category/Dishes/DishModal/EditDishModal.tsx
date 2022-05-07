@@ -22,7 +22,7 @@ export const EditDishModal = ({ item, onClose }: Props) => {
       isLoading={false}
       onSubmit={async (values) => {
         try {
-          await model().update(item.id, values);
+          await model().update(item.categoryId, values);
           await queryClient.invalidateQueries([categoriesQueryKey, 'category', item.categoryId]);
           onClose();
         } catch (error) {

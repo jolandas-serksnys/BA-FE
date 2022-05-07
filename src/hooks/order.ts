@@ -20,7 +20,7 @@ export const model = () => ({
     return api.post<TableOrder>(URL.TABLE_ORDER, { id }).then((response) => response?.data);
   },
   cancel: async (id: number) => {
-    return api.post<TableOrder>(URL.CANCEL, { id }).then((response) => response?.data);
+    return api.post<TableOrder>(generatePath(URL.CANCEL, { id: `${id}` })).then((response) => response?.data);
   },
   active: async (query?: string, dateFrom?: string, dateTo?: string) => {
     return api.post<TableOrder[]>(URL.ACTIVE, { query, dateFrom, dateTo }).then((response) => response?.data);
